@@ -1,0 +1,28 @@
+# Notion page IDs for sync
+
+Parent page:
+  3656d3b8-eb13-81d6-a5b1-f60287a33180  Learning M8 (overview)
+
+Weeks:
+  3656d3b8-eb13-816d-9d01-ef78ecc7e70a  Week 1 — Re-entry
+  3656d3b8-eb13-8176-b7b8-feb312ca33c4  Week 2 — LFO to filter
+  3656d3b8-eb13-810f-a677-c34e2a6c3e17  Week 3 — Pitch slides, Tracking, filters
+  3656d3b8-eb13-81b8-9f49-e28b553934d0  Week 4 — Retriggers, arpeggios, LFO concept
+  3656d3b8-eb13-8133-ba1d-e7526bcc43ce  Week 5 — Mix Project 1
+  3656d3b8-eb13-81ea-8e0f-fbf9302009c2  Week 6 — Finalize and ship Project 1
+  3656d3b8-eb13-8178-8e56-e7069ab7b6d9  Week 7 — Starter instrument library
+  3656d3b8-eb13-8137-bde2-f55178e82de5  Week 8 — Build Project 2
+  3656d3b8-eb13-81e1-8ba1-e86b4806f0a5  Week 9 — Finalize and ship Project 2
+  3656d3b8-eb13-81ed-bf73-c4bce3d0917d  Week 10 — Scope B mix + master (optional)
+
+Reference pages:
+  3656d3b8-eb13-817a-8429-ec0b288a53db  Mixing Reference
+  3656d3b8-eb13-8109-8a14-ca5adbc6debb  Finalization Reference
+  3656d3b8-eb13-819f-8ce3-d1cf7d83f6c0  Generative Toolkit Reference
+
+Markdown file mapping:
+  parent       → overview.md
+  Week N       → weeks/week-0N.md
+  Mixing       → reference/mixing.md
+  Finalization → reference/finalization.md
+  Generative   → reference/generative.md

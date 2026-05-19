@@ -101,9 +101,17 @@ The M8 Operation Manual is the source of truth for M8 specifics. When adding fac
 
 ## Sync to Notion
 
-After editing markdown, you can mirror changes to Notion using its MCP integration. Page IDs are in `notion-page-ids.txt`. The Notion API uses the `update_content` command with `content_updates` (search-and-replace) for targeted edits. Whole-page replacement is also possible via `replace_content`.
+**Rule: after every set of markdown edits in this repo, Claude must mirror the changes to the corresponding Notion page via the `mcp__m8-guide__notion-*` MCP tools.** Do this as part of finishing the task — not as a separate step the user has to request. If the sync fails (auth, missing page, structural mismatch), surface the failure rather than silently dropping it.
 
-Reverse direction (Notion → markdown): use the `notion-fetch` MCP tool to retrieve a page's content, then write back to the corresponding markdown file.
+Page-ID mapping (markdown file → Notion page) lives in `notion-page-ids.txt`:
+- `overview.md` → parent "Learning M8" page
+- `weeks/week-0N.md` → Week N page
+- `reference/<name>.md` → matching reference page
+- `CLAUDE.md` and `README.md` are repo-local — no Notion counterpart.
+
+Use targeted updates (`notion-update-page` with search-and-replace style content edits) for small changes. Reserve full-page replacement for structural rewrites. For Notion → markdown (reconciling drift), use `notion-fetch` to retrieve a page and write back to the matching file.
+
+The PDF (`build_pdf.py` → `M8_Learning_Plan.pdf`) is a separate concern — only regenerate when the user asks or when the change is structural enough to warrant a refreshed share artifact.
 
 ## Generating the PDF
 

@@ -94,10 +94,20 @@ The M8 Operation Manual is the source of truth for M8 specifics. When adding fac
 
 ## Things to watch out for when editing
 
-- **Don't claim M8 features without manual verification.** If you're unsure whether a command exists or what its parameters are, point the user to the in-device Effect Command Help view rather than inventing specifics.
+- **Don't claim M8 features without manual verification.** If you're unsure whether a command exists or what its parameters are, verify it first via the `m8-agent` MCP tool (see below). Only fall back to "check the in-device Effect Command Help" when the index has no good answer — never invent specifics.
 - **Hypersynth specifics are not fully documented in this plan.** The Hypersynth section in the Generative Toolkit Reference deliberately says "verify exact parameters in-device" because the manual section is dense and I didn't pull all details. Don't fabricate Hypersynth parameter values.
 - **The "drum kit" loading approach in M8 is non-obvious.** Week 1 uses three separate Sampler instruments (one sound per instrument). Week 7 covers sliced kits using AUTO/SILENCE slice modes + chromatic playback via the SLICE parameter. Don't accidentally re-introduce the "load a kit" phrasing — M8 has no kit concept.
 - **Time-boxes are structural defenses against perfectionism.** Every mix session has a 60-min hard limit; every master pass has a max-2-passes rule. Don't soften these even if it seems harsh — they're load-bearing.
+
+## Verifying M8 facts: the m8-agent MCP tool
+
+Before writing any factual claim about M8 behavior, search the local index via `mcp__m8-agent__search_m8`. It covers the official manual, The M8 Companion, the Open M8 Tips doc, and 144 community videos, and returns cited chunks with deep-link `citation_url`s. (`mcp__m8-agent__get_m8_stats` just reports index counts.)
+
+- For device facts and page numbers, scope to the manual: `sources: ["manual"]`. Use the returned page for the `(p.X)` citation convention.
+- Community sources (`companion`, `community_tips`, `video`) are good for technique and recipes — frame them as community knowledge, not device fact.
+- If official and community sources conflict, describe both.
+
+This is the first move for verification, and supersedes the older "point the user to in-device Effect Command Help" advice. The pdftotext workflow on the gitignored manual PDF still works for reading a full page, but `search_m8` is faster and returns a citable URL.
 
 ## Sync to Notion
 

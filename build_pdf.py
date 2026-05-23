@@ -575,8 +575,9 @@ def build_story(toc_data=None):
         body
     ))
     story.append(Paragraph(
-        "<b>Credit:</b> Built collaboratively with Claude (Anthropic). M8 by "
-        "Dirtywave (Timothy Lamb).",
+        "<b>Credit:</b> Created by Danielyan "
+        "(<a href=\"https://t.me/sadbuttrue1\">t.me/sadbuttrue1</a>), built "
+        "collaboratively with Claude (Anthropic). M8 by Dirtywave (Timothy Lamb).",
         body
     ))
     story.append(Spacer(1, 1 * cm))
@@ -656,7 +657,7 @@ def main():
         leftMargin=2 * cm, rightMargin=2 * cm,
         topMargin=2 * cm, bottomMargin=2 * cm,
         title="M8 Learning Plan",
-        author="Built collaboratively with Claude (Anthropic)",
+        author="Danielyan (t.me/sadbuttrue1)",
     )
     doc.build(story, onFirstPage=on_page, onLaterPages=on_page)
 
@@ -696,7 +697,7 @@ def main():
         leftMargin=2 * cm, rightMargin=2 * cm,
         topMargin=2 * cm, bottomMargin=2 * cm,
         title="M8 Learning Plan",
-        author="Built collaboratively with Claude (Anthropic)",
+        author="Danielyan (t.me/sadbuttrue1)",
     )
     doc.build(story, onFirstPage=on_page, onLaterPages=on_page)
 

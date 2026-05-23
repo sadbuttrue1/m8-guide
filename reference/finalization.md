@@ -68,7 +68,7 @@ The limiter prevents clipping and increases perceived loudness.
 ### Step 6: Render (5 min)
 
 - [ ] Project View → Render (manual p.47).
-- [ ] Render settings: 44.1kHz, 16-bit or 24-bit WAV. 24-bit if planning Scope B mastering pass; 16-bit if M8-only is the final.
+- [ ] Render settings: 44.1kHz WAV, MODE 16- or 32-bit (the M8's only two render bit depths — there is no 24-bit). Use 32-bit if planning a Scope B mastering pass; 16-bit if M8-only is the final.
 - [ ] Save with a clear filename and date.
 - [ ] **Done. Walk away.**
 

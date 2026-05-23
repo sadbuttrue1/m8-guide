@@ -40,7 +40,7 @@
 - [ ] Open an empty instrument slot, set `TYPE` to `Wavsynth` (Wavsynth view, manual p.50).
 - [ ] In Wavsynth, the `SHAPE` parameter cycles through wave types. Reference: Wavsynth Wave Table Index, p.82.
 - [ ] Listen to each in isolation. Set envelope to default (Instrument Modulation View → MOD1 = `AHD ENVELOPE` with default values).
-- [ ] Hit `[EDIT]+[PLAY]` to preview the instrument at each shape change.
+- [ ] Enable `NOTE PREVIEW` in System Settings (p.40), then audition each shape in **Phrase view** (p.14): drop the instrument in a step and move the note with `[EDIT]+[LEFT/RIGHT]` (semitone) or `[EDIT]+[UP/DOWN]` (octave). `[EDIT]+[PLAY]` from the Instrument view also works but only previews at a fixed low pitch.
 - [ ] Mental notes (no need to write):
 	- **Sine** — pure, sub-frequency, no harmonics
 	- **Sawtooth** — bright, all harmonics, classic synth bass/lead

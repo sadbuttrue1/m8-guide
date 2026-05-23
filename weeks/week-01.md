@@ -2,7 +2,7 @@
 
 **Goal:** Remove cold-start friction. Rebuild muscle memory. No new techniques — prove the device still works for you.
 **Mindset:** Deliberately low bar. Success = boot it, use it, render something.
-**Manual references:** Getting Started (p.5), Navigation (p.6), Global Key Shortcuts (p.7), Loading a Demo Song (p.9), Song View (p.10), Chain View (p.12), Phrase View (p.14), Render View (p.47).
+**Manual references:** Getting Started (p.5), Navigation (p.6), Global Key Shortcuts (p.7), Loading a Demo Song (p.9), Song View (p.10), Chain View (p.12), Phrase View (p.14), Mixer View (p.31), Render View (p.47).
 
 ---
 
@@ -62,7 +62,11 @@
 
 ## 🎯 Deliverable
 
-- [ ] Extend the 4-bar phrase into a 32-bar arrangement using **Chain View**. Each chain holds up to 16 phrases (manual p.12).
-- [ ] Add basic dynamics: mute/unmute tracks across sections. Mute current track with `[OPTION]+[SHIFT]` from Song View.
+Arrangement on the M8 happens in **Song View** — it stacks one chain per track down the rows, and each track's playhead runs through its chains independently (manual p.10). A chain is a sequence of up to 16 phrases (manual p.12). You'll turn your 4-bar loop into a short arrangement with real dynamics.
+
+- [ ] **Get your loop into a chain per track.** In each track's Song column, place a chain that plays your 4-bar loop (the phrases you wrote this week). Keep every chain the same length so the tracks stay aligned — the manual recommends this explicitly (p.10).
+- [ ] **Stack Song rows into ~32 bars with an arc.** Add rows in Song View until the song runs ~32 bars (e.g. eight rows of your 4-bar chain). Shape a simple arc by what's present each row: intro (drums only) → add bass → add melody → full → strip back.
+- [ ] **Drop tracks out with empty-phrase chains — not mutes.** To silence a track for a section while keeping it locked to the others, put a chain of *empty* phrases in that track's cell for those rows. By convention this is chain `00` or `FE` (manual p.10); empty/no-note chains show grayed-out in Song View. This bakes the dynamics into the arrangement, so they survive a save and render correctly.
+	- *Why not the mute button? Live mute/solo (`[OPTION]+[SHIFT]` / `[OPTION]+[PLAY]`, Mixer View, manual p.31) is a real-time performance control — it isn't stored in the song structure, so it's the wrong tool for composing sections. Use it to audition, not to arrange.*
 - [ ] Render: navigate to Render View (manual p.47) and render the song to WAV.
 - [ ] Save the WAV with today's date in the filename.

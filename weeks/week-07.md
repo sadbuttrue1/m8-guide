@@ -140,18 +140,18 @@ The "drum rack" approach that Week 1 deliberately avoided. Worth exploring now t
 
 - [ ] Find or make a multi-hit drum chain `.wav` (one file with kick, snare, hat, etc. concatenated). [DigiChain](https://brian3kb.itch.io/digichain) is a browser tool that builds these and writes M8-compatible slice markers.
 - [ ] Open an empty instrument slot. TYPE: `Sampler`. SAMPLE: load the drum chain `.wav`.
-- [ ] **Slice the sample.** In Instrument View, navigate to the sample's slice settings. Two slicing modes you'll typically use (manual p.54):
-	- `AUTO` — auto-slice on transients. Best when drum hits have clear attack peaks (most drum kits).
-	- `SILENCE` — auto-slice on silence gaps. Best when hits are separated by clear silence (one-shot recordings with padding).
-	- (`EVEN` mode also exists for evenly-spaced slicing up to 128 slices, but for variable-length drum chains AUTO or SILENCE give better results.)
-- [ ] **Trigger slices chromatically by note.** Set the `SLICE` parameter in Instrument View so each note maps to a different slice. In Phrase View, different notes (e.g. `C-4`, `C#4`, `D-4`) on this instrument now trigger slice 1, slice 2, slice 3, etc.
+- [ ] **Slice the sample.** Open the Sample Editor (from the Sampler's loaded sample) and create slice markers with the `SLICE:` process (manual p.56–57). Two modes you'll typically use:
+	- `SLICE:AUTO` — slices on transients. Best when drum hits have clear attack peaks (most drum kits).
+	- `SLICE:SILENC` — slices on silence gaps. Best when hits are separated by clear silence (one-shot recordings with padding).
+	- (`SLICE:[0-128]` also slices into up to 128 evenly-distributed divisions, but for variable-length drum chains AUTO or SILENCE give better results.)
+- [ ] **Trigger slices chromatically by note.** Back in Instrument View, set the Sampler's `SLICE` parameter to `FILE` — this plays the markers you just created, mapped to notes from `C-1` up (manual p.54, p.57). In Phrase View, different notes (e.g. `C-4`, `C#4`, `D-4`) now trigger consecutive slices. (A *numeric* `SLICE` value instead does equal-length slicing and ignores your AUTO/SILENCE markers.)
 - [ ] Build a drum pattern using note variation instead of instrument-number variation — like playing a drum rack.
 
 **When to use this vs separate Samplers (Week 1 approach):**
 - Separate Samplers (Week 1) — simpler, more flexible per-sound, what most M8 users do.
 - Sliced kit (this option) — saves instrument slots when you need many sounds and only have a few free slots. Also great for chopped breakbeats and vocal phrase manipulation.
 
-**Common failure mode:** loading a sliced chain into a Sampler with `SLICE 00OFF` (default) and expecting it to behave like a drum kit. With `SLICE 00OFF`, the instrument just plays the whole file and transposes by note. You need slice markers (via AUTO or SILENCE) AND a non-zero `SLICE` parameter so notes map to slices.
+**Common failure mode:** loading a sliced chain into a Sampler with `SLICE 00OFF` (default) and expecting it to behave like a drum kit. With `SLICE 00OFF`, the instrument just plays the whole file and transposes by note. You need slice markers (via AUTO or SILENCE) AND the `SLICE` parameter set to `FILE` so notes map to those markers.
 
 ## Mix focus this week: instruments are pre-mixed
 

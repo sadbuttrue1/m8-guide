@@ -26,7 +26,7 @@
 		- Instrument 01: `Sampler`, SAMPLE = a snare `.wav`
 		- Instrument 02: `Sampler`, SAMPLE = a hi-hat `.wav`
 		- In Phrase View on the drum track, vary the `I` column per row to switch which sound plays (e.g. kick on row 00, snare on row 04, hat on rows 02/06). Note value stays constant (e.g. `C-4`).
-		- **Note on sliced kit files:** if you load a multi-hit drum chain into one Sampler with `SLICE 00OFF`, it just plays the whole file pitched by note — not what you want. To trigger slices chromatically you need slice markers (via the Sampler's `AUTO` or `SILENCE` slicing modes) plus a non-zero `SLICE` parameter in Instrument View. **Skip this for Week 1** — it's covered in Week 7.
+		- **Note on sliced kit files:** if you load a multi-hit drum chain into one Sampler with `SLICE 00OFF`, it just plays the whole file pitched by note — not what you want. To trigger slices chromatically you need slice markers (via the Sample Editor's `AUTO` or `SILENCE` modes) plus the `SLICE` parameter set to `FILE` in Instrument View. **Skip this for Week 1** — it's covered in Week 7.
 	- Track 2: bass (use `Macrosynth`, default model — pick a low note, around `C-3`)
 	- Track 3: melodic (use `Macrosynth` or `Wavsynth` preset — higher note, around `C-5`)
 - [ ] In Phrase View: enter notes in column `N`, leave velocity `V` at default `64`, set instrument `I` to your instrument number.
@@ -44,7 +44,7 @@
 - [ ] Mental notes (no need to write):
 	- **Sine** — pure, sub-frequency, no harmonics
 	- **Sawtooth** — bright, all harmonics, classic synth bass/lead
-	- **Square** — hollow, only odd harmonics, "clarinet-y"
+	- **Square** — hollow, only odd harmonics, "clarinet-y" (on Wavsynth this is `PULSE 50%`; there's no shape literally labeled "Square")
 	- **Triangle** — mellow, mostly fundamental + weak harmonics
 	- **Noise** — non-pitched, used for hats/snare/sweeps
 

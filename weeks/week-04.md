@@ -4,7 +4,7 @@
 
 This is the last pure-technique week before Phase 2 (Apply).
 
-The `RET` command appears widely in M8 community discussions, but the manual's full FX command appendix is large — verify it in your device's **Effect Command Help view** before using. The `ARP` command IS documented in the manual (p.8, p.28). Use the in-device help as the source of truth.
+Both commands are documented in the manual: `ARP` (p.8, p.28) and `RET` (Sequencer FX Commands, p.69 — "Retrigger the current row with volume ramping"). The in-device **Effect Command Help view** is still the fastest way to confirm a command is valid for the current instrument type.
 
 **Manual references:** Effect Command Help View (p.48), Sequencer FX Commands (p.69), Instrument FX Commands (p.75), Common Groove Examples (p.81).
 
@@ -17,19 +17,19 @@ The `RET` command appears widely in M8 community discussions, but the manual's f
 - [ ] On any FX column in Phrase or Table View, press `[EDIT]+[UP or DOWN]` to open the **Effect Command Help view** (manual p.48).
 - [ ] Browse the available commands. The view shows real-time which commands are valid for the current instrument type.
 - [ ] Confirm `ARP` (arpeggio — definitely real, see p.8 example "ARP37").
-- [ ] Confirm whether a retrigger command exists for your instrument (look for `RET`, `RTG`, or similar in the help view).
+- [ ] Confirm `RET` (retrigger, Sequencer FX Commands p.69) appears in the help view for your instrument type.
 
 ### Arpeggios
 
 `ARP37` = arpeggio with first interval +3 semitones, second +7 semitones. Two digits = two intervals (manual p.8).
 
 - [ ] On a melodic instrument in Project 1, add `ARP` to a chord-stab note.
-- [ ] Try `ARP37` (major triad), `ARP47` (minor third + perfect fifth = sus arpeggio variant), `ARP35` (minor triad).
+- [ ] Try `ARP47` (major triad: +4 major third, +7 fifth), `ARP37` (minor triad: +3 minor third, +7 fifth), `ARP57` (sus4: +5 fourth, +7 fifth).
 - [ ] `ARP` respects the scale set via `SCA` command (manual p.28) — useful for keeping arpeggios in key.
 
 ### Retriggers / rolls
 
-- [ ] Find the retrigger command via the help view. It's used for snare rolls, glitched hat patterns, the staccato tracker feel.
+- [ ] Use `RET` (retrigger) for snare rolls, glitched hat patterns, the staccato tracker feel. `RET XY` retriggers the current row with volume ramping over `Y` ticks (manual p.69).
 - [ ] Add a retrigger to a snare hit somewhere in Project 1 (test a snare roll fill).
 - [ ] Try it on a hi-hat for stuttery effect.
 

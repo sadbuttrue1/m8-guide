@@ -46,7 +46,7 @@ This is a *verification*, not a real mix. You did the real mix last week.
 ### Step 5: Render (5 min)
 
 - [ ] Project View → Render.
-- [ ] 44.1kHz, 16-bit WAV (or 24-bit if planning Week 10 Scope B).
+- [ ] 44.1kHz, 16-bit WAV (or 32-bit if planning Week 10 Scope B — the M8 renders 16- or 32-bit, not 24).
 - [ ] Save with clear filename: `Project1_master_v1.wav` or similar.
 
 ### Step 6: First listen (20 min, fresh)

@@ -1,0 +1,5 @@
+# Dependencies for build_pdf.py (regenerates M8_Learning_Plan.pdf).
+# Install into a venv:  python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+markdown-it-py>=4.2.0
+reportlab>=4.5.1
+pypdf>=6.12.1

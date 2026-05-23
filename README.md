@@ -85,4 +85,4 @@ Outputs `M8_Learning_Plan.pdf` in the same directory.
 
 ## Credit
 
-Built collaboratively with Claude (Anthropic). M8 by Dirtywave (Timothy Lamb). Free to share, adapt, remix.
+Created by Danielyan ([t.me/sadbuttrue1](https://t.me/sadbuttrue1)), built collaboratively with Claude (Anthropic). M8 by Dirtywave (Timothy Lamb). Free to share, adapt, remix.

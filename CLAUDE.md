@@ -4,9 +4,9 @@ This file gives Claude Code context on how the M8 Learning Plan is structured an
 
 ## What this is
 
-A 9-week structured plan (+ optional Week 10) for a producer learning the Dirtywave M8 tracker. The plan also exists in Notion. Both should stay roughly in sync.
+A 9-week structured plan (+ optional Week 10) for a producer learning the Dirtywave M8 tracker. The plan also exists in Notion.
 
-The plan was generalized for sharing in the M8 community on Telegram. The PDF version is the deliverable people download; the markdown files are the source of truth for editing.
+The plan was generalized for sharing in the M8 community on Telegram. **The markdown files are the generalized source that feeds the community-shareable PDF** — keep them clean of personal detail. **The Notion copy is the personal working version and can/should carry more personal phrasing** (first-person notes, references to the author's own history, etc.). The two therefore diverge in *voice* by design — that divergence is not "drift" to be flattened. Markdown is the source of truth for **facts, structure, and technique**; Notion owns **personal tone**.
 
 ## Conventions used throughout
 
@@ -111,7 +111,9 @@ This is the first move for verification, and supersedes the older "point the use
 
 ## Sync to Notion
 
-**Rule: after every set of markdown edits in this repo, Claude must mirror the changes to the corresponding Notion page via the `mcp__m8-guide__notion-*` MCP tools.** Do this as part of finishing the task — not as a separate step the user has to request. If the sync fails (auth, missing page, structural mismatch), surface the failure rather than silently dropping it.
+**Rule: after every set of markdown edits in this repo, Claude must mirror the *substantive* change (facts, structure, tasks, page citations) to the corresponding Notion page via the `mcp__m8-guide__notion-*` MCP tools.** Do this as part of finishing the task — not as a separate step the user has to request. If the sync fails (auth, missing page, structural mismatch), surface the failure rather than silently dropping it.
+
+**Preserve Notion's personal phrasing.** When the Notion passage you're editing has personal/first-person wording the generalized markdown lacks, fold the factual change *into* that wording — don't replace the personal voice with the generalized markdown text. (E.g. fix a wrong page number inside the personal sentence; don't swap the whole sentence for the neutral one.)
 
 Page-ID mapping (markdown file → Notion page) lives in `notion-page-ids.txt`:
 - `overview.md` → parent "Learning M8" page
@@ -119,7 +121,7 @@ Page-ID mapping (markdown file → Notion page) lives in `notion-page-ids.txt`:
 - `reference/<name>.md` → matching reference page
 - `CLAUDE.md` and `README.md` are repo-local — no Notion counterpart.
 
-Use targeted updates (`notion-update-page` with search-and-replace style content edits) for small changes. Reserve full-page replacement for structural rewrites. For Notion → markdown (reconciling drift), use `notion-fetch` to retrieve a page and write back to the matching file.
+Use targeted updates (`notion-update-page` with search-and-replace style content edits) for small changes. Reserve full-page replacement for structural rewrites. Don't run a blanket reconciliation in either direction to make the two identical — voice differences are intentional. Never copy Notion's personal phrasing back into the markdown (it feeds the shared PDF); only pull genuine structural/factual fixes that direction.
 
 The PDF (`build_pdf.py` → `M8_Learning_Plan.pdf`) is a separate concern — only regenerate when the user asks or when the change is structural enough to warrant a refreshed share artifact.
 

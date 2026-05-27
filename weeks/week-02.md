@@ -83,7 +83,10 @@ How a note attacks (pick vs. tap vs. volume-knob swell) and decays (palm mute vs
 
 *Goal: make Project 1 have two clearly different sections.*
 
-- [ ] Add a **B section** to Project 1. Build a new chain (Song View: navigate to empty column, `[EDIT]` then `[EDIT]+[EDIT]` to create new empty chain).
+- [ ] Add a **B section** to Project 1. Like A, B is a *block of song rows spanning your tracks* — not a single cell. Scroll down past your Week 1 rows to the empty cells below and build B there:
+	- The track you're **changing** gets a **new chain**: on its empty cell, `[EDIT]` inserts a chain, then `[EDIT]+[EDIT]` (double-tap) makes it a fresh empty chain to fill (manual p.11).
+	- Tracks that **carry on unchanged** simply reuse their A chains in B's rows.
+	- A track you want to **drop out** gets the empty/`FE` chain — the same dynamics trick from Week 1.
 - [ ] B differs from A in **exactly one specific way**. Not "different everything."
 - [ ] Pick one:
 	- Drums drop out for the B section
@@ -99,5 +102,5 @@ How a note attacks (pick vs. tap vs. volume-knob swell) and decays (palm mute vs
 - [ ] Project 1 now has A and B sections in Song View.
 - [ ] Bass instrument has either a modulation-slot LFO or a table-based filter sweep — your choice.
 - [ ] At least one instrument has a deliberate ADSR shape (not default).
-- [ ] ~60 second loop minimum.
+- [ ] Song runs at least ~48 bars total — your ~32-bar A (≈8 song rows of a 4-bar chain) plus a B of ~16 bars (≈4 more rows). Measured in bars, not seconds: tempo moves the clock but not the arrangement — at 120 BPM your A alone is already ~64s.
 - [ ] Render to WAV (Render View, manual p.47).

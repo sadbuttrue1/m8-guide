@@ -1,6 +1,6 @@
 # Week 8 — Build Project 2
 
-**Goal:** Fresh project. Own instruments. All accumulated techniques. ~3 minute track at draft state by end of week.
+**Goal:** Fresh project. Own instruments. All accumulated techniques. ~88-bar / 22-row track (≈3 min at 120 BPM) at draft state by end of week.
 
 **No mixing or finalization this week.** Those are Week 9. This week is pure building.
 
@@ -36,7 +36,7 @@
 	- Trigger ONE note in Phrase View. The table plays the arp.
 	- Faster than writing every note. Great when you want movement but lack inspiration.
 - [ ] Don't force all of them. Use what fits.
-- [ ] Aim for ~3 minutes total. Use Time Stats View (p.46) to monitor.
+- [ ] Aim for ~88 bars / ~22 rows total. (Time Stats View, p.46, shows the running time to cross-check — ≈3 min at 120 BPM.)
 
 ### Structure target
 
@@ -62,14 +62,14 @@ The M8 has 3 send effects: ModFX (chorus/phaser/flanger), Delay, Reverb (manual 
 
 ### Decide before you start
 
-- [ ] **Before writing any notes** in Project 2: decide where the arrival point is. Most likely around 1:45–2:15 of a 3-minute track.
+- [ ] **Before writing any notes** in Project 2: decide where the arrival point is. Most likely around bar 52–68 (≈rows 13–17) of an ~88-bar track — roughly two-thirds through.
 - [ ] Decide WHAT happens at the arrival. Pick one:
 	- The full beat finally drops (kick + everything in)
 	- A melodic element finally enters
 	- Everything drops out except one element (negative arrival)
 	- Filter fully opens on a sound that's been muted/restricted
 	- A new key/transpose hits via Chain View `TSP`
-- [ ] Write toward that moment from minute 0.
+- [ ] Write toward that moment from the start.
 
 ### Self-check during the week
 
@@ -83,9 +83,9 @@ If a section answers "no" to both, that section is the problem. Cut it or rebuil
 
 ## 🎯 Deliverable — PROJECT 2 DRAFT COMPLETE
 
-- [ ] Project 2 is ~3 minutes long.
+- [ ] Project 2 is ~88 bars / ~22 rows long (≈3 min at 120 BPM).
 - [ ] Uses only your `EG-*` instruments.
-- [ ] Has a clear arrival point at a specific timestamp.
+- [ ] Has a clear arrival point at a specific bar.
 - [ ] Render a rough WAV (draft, no mix or master pass yet).
 - [ ] **Save and walk away.** Week 9 is mixing + finalizing.
 - [ ] Notice: you built a track using your own instruments and your own techniques. The whole pipeline.

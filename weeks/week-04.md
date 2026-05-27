@@ -1,6 +1,6 @@
 # Week 4 — Retriggers, arpeggios, LFO concept
 
-**Goal:** Third table-class technique. Project 1 reaches its ~2 minute draft state, but **doesn't finish this week** — finishing happens in Weeks 5–6 with proper mix and finalization.
+**Goal:** Third table-class technique. Project 1 reaches its ~60-bar / 15-row draft state (≈2 min at 120 BPM), but **doesn't finish this week** — finishing happens in Weeks 5–6 with proper mix and finalization.
 
 This is the last pure-technique week before Phase 2 (Apply).
 
@@ -91,7 +91,7 @@ Three properties: **rate** (FREQ), **depth** (AMT), **destination** (DEST).
 
 ## 🎯 Deliverable — PROJECT 1 DRAFT COMPLETE
 
-- [ ] Project 1 is now a ~2 minute track with A section, B section, designed transition, dynamic elements.
+- [ ] Project 1 is now a ~60-bar / 15-row track (≈2 min at 120 BPM) with A section, B section, designed transition, dynamic elements.
 - [ ] Render a rough WAV for reference (no mix or master pass yet).
 - [ ] **Save and walk away.** Don't try to mix or polish — that's Weeks 5–6.
 - [ ] Notice: this is the first time you've gotten a track to "draft complete" on M8 in this cycle. The hard part starts next week (mixing), but the writing is done.

@@ -165,5 +165,5 @@ Reference: [Mixing Reference](../reference/mixing.md) → Frequency carving reci
 
 - [ ] 10 instruments saved to `/Instruments/EG-*` on SD card with consistent naming.
 - [ ] Each has its instrument EQ pre-configured per its role.
-- [ ] Render a 30-second demo cycling through each instrument (16 bars each, all 10 instruments in sequence). This is your reference for Week 8.
+- [ ] Render a ~16-bar / ~4-row demo (≈30s at 120 BPM) cycling through all 10 instruments in sequence — roughly a bar or two each. This is your reference for Week 8.
 - [ ] No track this week.

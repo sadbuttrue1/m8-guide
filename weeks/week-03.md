@@ -73,7 +73,7 @@ Cutoff is where the wah pedal points; resonance is how "vocal" the wah sounds. T
 - [ ] Project 1 has intentional element changes between A and B.
 - [ ] Bass uses `PIT` for at least one slide.
 - [ ] Hats or snare have a Tracking modulation responding to velocity.
-- [ ] ~90 second loop.
+- [ ] ~52 bars / ~13 rows long (rows = 4-bar chains).
 - [ ] Render to WAV (Render View, manual p.47).
 
 ---

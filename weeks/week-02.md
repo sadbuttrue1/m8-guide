@@ -67,13 +67,28 @@ The Instrument Modulation View also handles envelopes. The same modulation slots
 - [ ] Open a fresh Wavsynth or Macrosynth instrument.
 - [ ] In Instrument Modulation View, set `MOD1` to `ADSR ENVELOPE`, `DEST` to `VOLUME` (or `AMP`).
 - [ ] Configure ADSR (manual p.20):
+	- `AMT` (amount): the envelope's **depth and direction** — set this first (see below). For volume, keep it positive; `7F` = full depth.
 	- `ATK` (attack): time to reach `AMT`
 	- `DEC` (decay): time to reach sustain
 	- `SUS` (sustain): hold level while note plays
 	- `REL` (release): time to fall to zero after note ends
-- [ ] **Pluck**: ATK=00, DEC=20, SUS=00, REL=10. Hear: percussive, snappy.
-- [ ] **Pad**: ATK=60, DEC=00, SUS=7F, REL=80. Same oscillator, completely different instrument.
+- [ ] **Pluck**: AMT=7F, ATK=00, DEC=20, SUS=00, REL=10. Hear: percussive, snappy.
+- [ ] **Pad**: AMT=7F, ATK=60, DEC=00, SUS=7F, REL=80. Same oscillator, completely different instrument.
 - [ ] Realize: attack and release are doing 80% of the work in defining what something *sounds like*.
+
+### Why `AMT` looks split at `80`
+
+`AMT` is **bipolar** — a signed value, not a `00`→max ramp, which is why the interface looks divided at `80`:
+
+- `00`–`7F` → **positive** amount (`00` = none, `7F` = +127, full depth)
+- `80`–`FF` → **negative** amount (`80` ≈ most negative, `FF` ≈ −1)
+
+So scrolling past `7F` flips the modulation *direction* rather than adding more depth. Read `AMT` as **how far, and which way**, the envelope pushes its destination.
+
+- [ ] For a normal volume envelope, keep `AMT` positive — `7F` is full depth. (That's why the Pluck and Pad above both use `AMT=7F`.)
+- [ ] A **negative** `AMT` on volume *inverts* the envelope: louder envelope = quieter sound, i.e. a ducking/gate effect. Deliberate, not what you want for a standard amp shape.
+- [ ] Negative depth is more useful on `CUTOFF` (envelope *closes* the filter) or `PITCH` (downward dive for kicks/zaps).
+- [ ] **Common failure mode:** leaving `AMT` at `00` (no depth — the envelope does nothing) or landing in `80`+ by accident (inverted), then wondering why the shape is backwards. The hex logic: a negative *volume* is meaningless, but a negative *change* in volume isn't — so modulation amounts are signed (manual p.21; The M8 Companion §2.4).
 
 ### Guitar parallel
 

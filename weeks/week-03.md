@@ -1,25 +1,37 @@
 # Week 3 — Pitch slides, velocity, and Tracking
 
-**Goal:** Two more techniques in your toolbox: pitch slides via the `PIT` command (real, documented), and velocity-driven modulation via the **Tracking** modulation type.
+**Goal:** Two more techniques in your toolbox: pitch slides via the `PSL` command (plus instant pitch jumps via `PIT`), and velocity-driven modulation via the **Tracking** modulation type.
 
-**Manual references:** Scale View (mentions `PIT`, p.28), Tracking modulation type (p.21), Sequencer FX Commands (p.69), Instrument FX Commands (p.75), Effect Command Help View (p.48).
+**Manual references:** Scale View (mentions `PIT`, p.28), Tracking modulation type (p.21), Sequencer FX Commands (`PSL`, p.71), Instrument FX Commands (`PIT`, p.75), Effect Command Help View (p.48).
 
 ---
 
 ## Thread 1: M8 technique — Pitch slides and velocity response
 
-### Pitch slides via `PIT`
+### Two pitch commands: `PSL` (slide) and `PIT` (jump)
 
-The `PIT` command is a real M8 effect command (confirmed in Scale view section, manual p.28). It works as a pitch effect that can be quantized to the current scale.
+They sound similar but do different things:
+
+- `PSL XX` (Pitch Slide, sequencer FX, manual p.71) — **portamento**. The note *glides* from the previous note's pitch to the new one. `XX` is the slide time in ticks (6 ticks = one row at default settings).
+- `PIT XX` (Pitch, instrument FX, manual p.75) — **instant** offset of the note pitch in semitones. `0C` = up an octave, `F4` = down an octave (values above `7F` count downward). No glide.
 
 - [ ] Open the bass instrument in Project 1.
-- [ ] In Phrase View, position cursor on an FX column next to a bass note. Press `[EDIT]+[UP or DOWN]` to open the **Effect Command Help view** (manual p.48).
-- [ ] Find `PIT` in the command list. The help view shows the parameter range and behavior.
-- [ ] Build an acid-style bassline by alternating notes and `PIT` slides:
-	- Row 00: `C-2`, FX1: `PIT` with positive value (slide up)
-	- Row 04: `C-2`, FX1: `PIT` with negative value (slide down)
-- [ ] Experiment with `PIT` values. Use the in-device help text at the bottom of the screen — it shows the decimal equivalent and what the value does.
-- [ ] **Scale-aware:** if you have a `SCA` (scale) command active on the track, `PIT` slides quantize to the scale (manual p.28). Useful for keeping slides in key.
+- [ ] In Phrase View, position cursor on an FX column next to a bass note. Press `[EDIT]+[UP or DOWN]` to open the **Effect Command Help view** (manual p.48). Find `PSL` and `PIT` and read their help text — it shows the decimal equivalent and what each value does.
+
+### Build an acid-style bassline
+
+**Use case:** "acid" = the TB-303 sound — a short looping bass pattern that stays mostly on ONE note. The interest comes from octave jumps, slides between a few chosen notes, and accents — not from melody.
+
+**Recipe:**
+
+- [ ] Write one bar of straight 8th-note bass hits, all `C-2` (rows 00, 02, 04, … with a short envelope so each hit is a pluck).
+- [ ] **Octave jumps:** change 2–3 of the hits to `C-3`. Still one "note," but now it bounces.
+- [ ] **Slides:** pick 1–2 spots where the pitch changes and put `PSL` on the *destination* note. Leave the instrument column empty on that row — the note then legatos into the slide instead of retriggering. Community consensus: `PSL06`–`07` is closest to the 303's slide feel.
+- [ ] **Gating:** the 303 sequencer cuts notes short. Community trick: put `KIL03` on the step *before* any note you're NOT sliding into — it chokes the previous note just before the new one hits.
+- [ ] **Accents:** raise the `V` column on 2–3 hits. Once you've set up Tracking (next section), route velocity → `CUTOFF` so accented hits open the filter — that's the 303 accent.
+- [ ] **Scale-aware:** if you have a `SCA` (scale) command active on the track, `PIT` offsets quantize to the scale (manual p.28). Useful for jumps that aren't octaves.
+
+**Common failure mode:** the slide sounds like two separate notes instead of one glide. Cause: the instrument number is re-entered on the slide row, which retriggers the envelope. Delete it — note + `PSL`, no instrument number.
 
 ### Velocity-driven modulation via Tracking
 
@@ -71,7 +83,7 @@ Cutoff is where the wah pedal points; resonance is how "vocal" the wah sounds. T
 ## 🎯 Deliverable
 
 - [ ] Project 1 has intentional element changes between A and B.
-- [ ] Bass uses `PIT` for at least one slide.
+- [ ] Bass uses `PSL` for at least one slide (and optionally `PIT` for an instant jump).
 - [ ] Hats or snare have a Tracking modulation responding to velocity.
 - [ ] ~52 bars / ~13 rows long (rows = 4-bar chains).
 - [ ] Render to WAV (Render View, manual p.47).

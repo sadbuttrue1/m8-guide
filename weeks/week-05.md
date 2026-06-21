@@ -56,13 +56,22 @@ Reference: Mixing Reference → Scope A, Steps 3–4.
 - [ ] Full mix unmuted. Listen all the way through Project 1.
 - [ ] One pass only. Note 1–2 issues if any. **Don't fix them this session.**
 
+**What counts as an "issue"?** You're listening for problems on one of the [5 dimensions of a mix](../reference/mixing.md#the-5-dimensions-of-a-mix) — level, frequency, space, depth, or dynamics. Concretely:
+- Something obviously too loud or buried (level).
+- Muddy/boxy (low-mid buildup ~200–400Hz) or harsh/brittle (frequency).
+- Everything piled in the center, or narrow/flat (space).
+- Smeared with no clarity — usually too much reverb (depth).
+- Kick swallowed when the bass plays, or one element poking out no matter the level (dynamics).
+
+If you're not sure how to name what's wrong, check the symptom list in [Mixing Reference → When mixing fails](../reference/mixing.md#when-mixing-fails). A clean mix where nothing jumps out is a valid result — note "no issues" and skip Session 3.
+
 ---
 
 ## Session 3 (~60 min, optional) — Polish and verify
 
-Only do this session if Session 2 left you with clear, specific issues.
+Only do this session if Session 2 left you with clear, specific issues (see Session 2 Step 3 for what counts).
 
-- [ ] Address 1–2 specific issues from Session 2. **Maximum two fixes.**
+- [ ] Address 1–2 specific issues from Session 2. **Maximum two fixes.** For the fix-per-symptom, use [Mixing Reference → When mixing fails](../reference/mixing.md#when-mixing-fails).
 - [ ] Listen on a third system if available (laptop, car, somewhere new).
 - [ ] **Final check question:** "Is anything obviously wrong on 2+ systems?" If no, you're done. If yes, do exactly one more fix and then stop.
 

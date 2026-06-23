@@ -43,6 +43,13 @@ This is a *verification*, not a real mix. You did the real mix last week.
 - [ ] `ATK`: `20–40`. `REL`: `00` (AUTO).
 - [ ] `SOFT CLIP`: gentle. Adds warmth.
 
+**How to read the compression:** With `LIM` selected, the scope shows the input signal along the bottom and the **limiter activity highlighted along the top** — that top band *is* the compression (p.34). The further it dips **down from the top**, the more gain reduction on that peak. A thin sliver = barely working; a thick band carving in continuously = past 6dB, back off `LIM`. (On the `MIX` indicator the same activity shows as a white line, p.30.) Play the loudest section and judge the band there, not on quiet parts.
+
+- [ ] `ZOOM` sets the scope's lower limit **in dB** — set it so the few-dB window you care about is legible instead of a guess.
+- [ ] `PEAK` shows the main mix's current peak dB (resets on `MIX`/`LIM` change; clear with `[OPT]+[EDIT]`). Use it to confirm you're controlling peaks, not crushing the body.
+
+The M8 gives no single "gain reduction = 3dB" number — you're eyeballing that top band against the `ZOOM` dB scale. That's the intended way to check it.
+
 ### Step 5: Render (5 min)
 
 - [ ] Project View → Render.

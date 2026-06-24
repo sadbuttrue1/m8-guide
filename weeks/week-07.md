@@ -12,6 +12,20 @@ This is the recovery week between Project 1 (shipped Week 6) and Project 2 (buil
 
 ## Thread 1: M8 technique — Build the 10 instruments
 
+### How every M8 instrument is built
+
+Whatever the `TYPE`, every M8 instrument runs the same signal path — only the leftmost section changes per engine (Instrument View p.16, Modulation View p.18):
+
+**Source → Filter → Amplifier → Mixer sends**, with **4 modulation slots** layered on top.
+
+- **Source** — the engine-specific part: Wavsynth `SHAPE`, Macrosynth `SHAPE`/`TIMBRE`/`COLOR`, the FM operators, or a Sampler `SAMPLE`. This is the *only* part that differs between engines.
+- **Filter** — `FILTER` type (`LP`/`HP`/`BP`/`BS`/`LP>HP`/ZDF), `CUTOFF`, `RES`. Identical on every engine.
+- **Amplifier** — `AMP` plus `LIM` (`CLIP`/`SIN`/`FOLD`/`WRAP`) for level and drive.
+- **Mixer sends** — `DRY`/`MFX`/`DEL`/`REV` out to the global effects.
+- **Modulation (`MOD1`–`MOD4`)** — each slot is an `AHD ENV`, `ADSR ENV`, `DRUM ENV` (purpose-built for percussion), `LFO`, `TRIG ENV`, or `TRACKING` (maps note/velocity to a parameter), pointed at any `DEST` (p.20).
+
+Every build below follows the same order — **pick the source, shape the amp envelope, set the filter, then add modulation.** Learn the Filter/Amp/Mixer/Mod sections once; they're the same on all 10 instruments.
+
 ### Setup
 
 - [ ] Decide a naming convention. Suggested: `EG-Bass-Sub`, `EG-Bass-Acid`, `EG-Lead-Pluck`. M8 NAME field is limited length — keep short.
@@ -20,63 +34,112 @@ This is the recovery week between Project 1 (shipped Week 6) and Project 2 (buil
 ### Bass instruments
 
 - [ ] **Sub bass** — `EG-Bass-Sub`
-	- TYPE: `Wavsynth` (sine) or `Macrosynth` (clean sine model)
-	- MOD1: ADSR → VOLUME, ATK=00, DEC=20, SUS=60, REL=20
-	- **Instrument EQ**: LOWCUT below 40Hz (pre-mixed for kick compatibility)
+	- **Use case:** the foundation under everything — pure low-end weight, felt more than heard, with no harmonics to fight the kick or mids.
+	- **Build it:**
+		1. TYPE `Wavsynth`, SHAPE `SINE` (or `Macrosynth` `SINE TRIANGLE` for a touch more body, p.76) → a sine has almost no harmonics, so it stays out of the way of every other sound.
+		2. `MOD1` `ADSR` → `VOLUME`, ATK=00 DEC=20 SUS=60 REL=20 → fast attack lands it on the beat; the moderate sustain lets notes hold their length.
+		3. Leave the `FILTER` open on a pure sine → there are no harmonics to cut, so the filter has nothing to do.
+		4. Keep `AMP` modest and avoid `LIM` drive → distortion *adds* harmonics, which is exactly what a clean sub must not have.
+	- **Instrument EQ:** LOWCUT below 40Hz (pre-mixed for kick compatibility).
+	- **Common failure mode:** adding drive or a bright shape grows harmonics that clash with the kick and muddy the low-mids. Keep it clean and let the kick own the transient.
 - [ ] **Acid bass** — `EG-Bass-Acid`
-	- TYPE: `Macrosynth`, model with strong filter (Macrosynth Models, p.76)
-	- FILTER CUTOFF mid (~`50`), RES high (~`B0`)
-	- MOD1: LFO → FILTER CUTOFF, OSC=TRI, FREQ=08, AMT=40
-	- Table: a few `PIT` slides built in
-	- **Instrument EQ**: LOWCUT below 40Hz
+	- **Use case:** squelchy 303-style bassline that moves under a beat — the filter sweep *is* the hook.
+	- **Build it:**
+		1. TYPE `Macrosynth`, SHAPE a saw model (`SAW SQUARE` or `SAW SYNC`, p.76) → a saw is harmonically rich, giving the resonant filter something to chew on.
+		2. `FILTER` `LP`, CUTOFF low–mid (~`50`), RES high (~`B0`) → resonance is what makes the squelch; start cutoff low so the envelope has room to open *into*.
+		3. `MOD1` `ADSR` → `CUTOFF`, ATK=00 DEC=30 SUS=00 AMT=60 → the per-note filter pluck. This envelope-on-cutoff is the core of the acid sound.
+		4. `MOD2` `LFO` → `CUTOFF`, OSC=TRI FREQ=08 AMT=20 → a slow wobble layered over the pluck for bar-length movement.
+		5. Table: a couple of `PIT` slide rows → the classic 303 glide between notes.
+	- **Instrument EQ:** LOWCUT below 40Hz.
+	- **Common failure mode:** RES too low → no squelch. CUTOFF parked too high → the envelope has nowhere to travel and the pluck disappears.
 - [ ] **FM bass** — `EG-Bass-FM`
-	- TYPE: `FM Synth` (manual p.58)
-	- Browse factory FM presets first. Modify for grit.
-	- Add filter movement via MOD slot.
-	- **Instrument EQ**: LOWCUT below 40Hz
+	- **Use case:** bass with bite and metallic harmonics a subtractive synth can't make — for DnB/neuro/electro where the bass needs *character*, not just weight.
+	- **Build it:**
+		1. TYPE `FM Synth` (p.58). Browse the factory FM presets and start from one you like → FM is far faster to modify than to build from a blank 4-op patch.
+		2. Pick an `ALGO` with a clear carrier chain (e.g. `A>B>C>D`) and set operator `RATIO`s to integers (`1.00`, `2.00`) → integer ratios stay harmonic and musical; non-integer ratios go clangy (Thread 2 covers why).
+		3. Add grit with operator feedback (`FBK`) or a higher modulator `RATIO`/`LEV` → feedback and deep modulation are where FM's edge comes from.
+		4. `MOD1` `ADSR` → a filter `CUTOFF` or an operator `LEV` → an envelope on a modulator level makes the timbre *evolve* as the note decays, instead of sitting static.
+	- **Instrument EQ:** LOWCUT below 40Hz.
+	- **Common failure mode:** cranking modulation until it's pure noise — FM gets harsh fast. Back off modulator level until the pitch is clearly audible again.
 
 ### Lead/melodic instruments
 
 - [ ] **Pluck lead** — `EG-Lead-Pluck`
-	- TYPE: Macrosynth or Wavsynth, sawtooth
-	- MOD1: ADSR → VOLUME, ATK=00, DEC=10, SUS=00, REL=08 (very short)
-	- MOD2: ADSR → FILTER CUTOFF, ATK=00, DEC=30, SUS=00, REL=00, AMT=60
-	- **Instrument EQ**: LOWCUT below 100–200Hz
+	- **Use case:** short, percussive melodic stabs — arps, plucks, the rhythmic top-line that drives a track.
+	- **Build it:**
+		1. TYPE `Macrosynth` `PLUCKED` model (p.77) for instant plucked-string physics, or any saw model / `Wavsynth` `SAW` if you want to shape it by hand → `PLUCKED` does the work for you; a saw gives full manual control.
+		2. `MOD1` `ADSR` → `VOLUME`, ATK=00 DEC=10 SUS=00 REL=08 → no sustain + fast decay = the percussive "pluck." Sustain at `00` is what keeps it short.
+		3. `MOD2` `ADSR` → `CUTOFF`, ATK=00 DEC=30 SUS=00 AMT=60 → a filter snapping shut as the note decays adds the bright-to-dark pluck timbre on top of the volume shape.
+		4. `FILTER` `LP`, CUTOFF mid → gives that cutoff envelope somewhere to travel from.
+	- **Instrument EQ:** LOWCUT below 100–200Hz.
+	- **Common failure mode:** SUS above `00` → the note rings instead of plucking. If it sounds like a pad, your sustain is too high.
 - [ ] **Pad** — `EG-Pad`
-	- TYPE: Macrosynth, soft model
-	- MOD1: ADSR → VOLUME, ATK=60, DEC=00, SUS=7F, REL=A0
-	- MOD2: LFO → FILTER CUTOFF, OSC=SIN, FREQ=20, AMT=20
-	- **Instrument EQ**: LOWCUT below 200Hz, cut 200–500Hz to avoid mud
+	- **Use case:** sustained harmonic bed that fills space behind the lead and glues a section together.
+	- **Build it:**
+		1. TYPE `Macrosynth`, a soft/smooth model (e.g. `MORPH`, p.76) → pads want a mellow source, not a buzzy saw.
+		2. `MOD1` `ADSR` → `VOLUME`, ATK=60 DEC=00 SUS=7F REL=A0 → slow attack + full sustain + long release = it swells in and fades out instead of stabbing.
+		3. `MOD2` `LFO` → `CUTOFF`, OSC=SIN FREQ=20 AMT=20 → slow filter drift so the pad breathes instead of sitting still.
+		4. `FILTER` `LP`, CUTOFF mid-low → keeps the pad *behind* the lead, not on top of it.
+	- **Instrument EQ:** LOWCUT below 200Hz, cut 200–500Hz to avoid mud.
+	- **Common failure mode:** attack too fast → the pad stabs and competes with the lead. If you can hear the note "start," lengthen ATK.
 - [ ] **Stab/chord** — `EG-Stab`
-	- TYPE: Macrosynth or `Hypersynth` (p.60) for built-in chords
-	- Short attack, short decay, no sustain
-	- **Instrument EQ**: LOWCUT below 150Hz
+	- **Use case:** rhythmic chord hits — house/garage stabs, the harmonic punctuation between melodic phrases.
+	- **Build it:**
+		1. TYPE `Macrosynth` (play a chord across tracks) or `Hypersynth` (p.60) to generate the chord from a single note → Hypersynth saves you voicing chords by hand (see Thread 3 Option B).
+		2. `MOD1` `ADSR` → `VOLUME`, ATK=00 DEC=18 SUS=00 REL=10 → short attack, short decay, no sustain = a tight stab, not a held chord.
+		3. `FILTER` `LP`, CUTOFF mid with a little `RES` → adds a "pluck" snap to the chord's front edge.
+		4. Add a short `REV` or `DEL` send → stabs sit better with a touch of tail behind them.
+	- **Instrument EQ:** LOWCUT below 150Hz.
+	- **Common failure mode:** long decay/sustain → stabs blur into each other and lose their rhythmic punch.
 
 ### Drum instruments
 
 - [ ] **Kick** — `EG-Drum-Kick`
-	- TYPE: `Sampler` with kick sample, OR `FM Synth` for FM kick
-	- If FM: ADSR on pitch (high→low, fast) + ADSR on volume (short)
-	- **Instrument EQ**: boost 60–80Hz, cut 200–400Hz
+	- **Use case:** the transient + weight that anchors the whole beat.
+	- **Build it:**
+		1. TYPE `Sampler` with a kick sample (simplest), OR `FM Synth` for a synthesized kick you can tune → a sample is fastest; FM lets you dial pitch and punch exactly.
+		2. If synthesized: `MOD1` `DRUM ENV` → `PITCH`, a fast high→low sweep → the pitch drop *is* the "thump." The `DRUM ENV` is purpose-built for percussion (p.20) — sharper than an ADSR for this.
+		3. `MOD2` `DRUM ENV` → `VOLUME`, short → the body envelope that gives the kick its length.
+		4. Keep it mono and short → a long kick tail eats the headroom the bass needs.
+	- **Instrument EQ:** boost 60–80Hz, cut 200–400Hz.
+	- **Common failure mode:** pitch sweep too slow → you hear a "boing" instead of a thump. Speed up the pitch envelope's decay.
 - [ ] **Snare** — `EG-Drum-Snare`
-	- TYPE: Sampler with snare, OR Wavsynth noise layered with tonal
-	- Tracking modulation: VELOCITY → VOLUME for natural feel
-	- **Instrument EQ**: BELL boost ~200Hz, BELL boost ~5kHz
+	- **Use case:** the backbeat crack — a noise body plus a tonal "snap."
+	- **Build it:**
+		1. TYPE `Sampler` with a snare (simplest), OR layer two `Wavsynth` instruments: one `NOISE` for the body, one `SINE`/`TRIANGLE` for the tonal snap → real snares are noise + a tuned shell, and layering recreates that.
+		2. `MOD1` `DRUM ENV` (or `ADSR`) → `VOLUME`, short decay, no sustain → a snare is a fast burst, not a sustained tone.
+		3. `MOD2` `TRACKING` → `VOLUME`, SRC `VELOCITY` → ghost notes at low velocity, hard backbeats at high velocity = a human-feeling snare (p.20).
+		4. `FILTER` `BP` or `HP` on the noise layer → focuses the crack in the upper-mids.
+	- **Instrument EQ:** BELL boost ~200Hz (body), BELL boost ~5kHz (snap).
+	- **Common failure mode:** all noise, no tone → a "pfft" with no crack. Add or raise the tonal layer / the ~200Hz body.
 - [ ] **Closed hat** — `EG-Drum-Hat-C`
-	- TYPE: Wavsynth (noise) or Sampler
-	- ATK=00, DEC=04, SUS=00, REL=02
-	- Tracking modulation: VELOCITY → VOLUME
-	- **Instrument EQ**: LOWCUT 300Hz, HI.SHELF boost above 8kHz
+	- **Use case:** the high-frequency timekeeper that drives the groove.
+	- **Build it:**
+		1. TYPE `Wavsynth` `NOISE` (or `Sampler`) → hats are filtered noise, and Wavsynth noise needs no sample to load.
+		2. `MOD1` `DRUM ENV`/`ADSR` → `VOLUME`, ATK=00 DEC=04 SUS=00 REL=02 → a very short envelope = the closed "tick."
+		3. `MOD2` `TRACKING` → `VOLUME`, SRC `VELOCITY` → velocity variation is what makes hi-hats groove instead of machine-gun.
+		4. `FILTER` `HP`, CUTOFF high → removes the low rumble so the hat sits up top.
+	- **Instrument EQ:** LOWCUT 300Hz, HI.SHELF boost above 8kHz.
+	- **Common failure mode:** decay too long → a closed hat that rings like an open one. Shorten DEC/REL.
 - [ ] **Open hat** — `EG-Drum-Hat-O`
-	- Same as closed but DEC=20, REL=10
-	- **Instrument EQ**: same as closed hat
+	- **Use case:** the off-beat lift that answers the closed hat.
+	- **Build it:**
+		1. Start from a *copy* of the closed hat → the two should share a timbre and differ only in length, so the pair reads as one kit.
+		2. Lengthen the envelope: DEC=20 REL=10 → the longer tail is the only thing that makes it "open."
+		3. (optional) A `TRIG ENV` choke so a closed hat cuts the open hat's tail → real hi-hats can't ring while the pedal closes (p.20).
+	- **Instrument EQ:** same as closed hat.
+	- **Common failure mode:** giving it a different timbre from the closed hat → the two stop sounding like the same instrument. Copy first, then only change length.
 
 ### Bonus
 
 - [ ] **Noise sweep** — `EG-FX-Sweep`
-	- TYPE: Wavsynth, noise
-	- Long table or modulation slot automating filter cutoff closed → open
-	- For transitions. Trigger once at end of A section.
+	- **Use case:** transition riser/faller — covers the seam between sections.
+	- **Build it:**
+		1. TYPE `Wavsynth`, SHAPE `NOISE`.
+		2. Automate `CUTOFF` closed→open with a long `AHD ENV` (long ATK), or a table ramp spread over many rows → the slow filter open is the "whoosh."
+		3. `FILTER` `BP` for a wind-like character, or `LP` for a fuller sweep.
+		4. Trigger it once at the end of a section → it's a one-shot transition, not a loop.
+	- **Common failure mode:** ramp too short → a quick "pfft" instead of a building riser. Spread the cutoff move over more rows/ticks.
 
 ### Cross-check by reverse-engineering
 

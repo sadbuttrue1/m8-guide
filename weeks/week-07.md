@@ -57,13 +57,17 @@ Every build below follows the same order — **pick the source, shape the amp en
 	- **Common failure mode:** RES too low → no squelch. CUTOFF parked too high → the envelope has nowhere to travel and the pluck disappears.
 - [ ] **FM bass** — `EG-Bass-FM`
 	- **Use case:** bass with bite and metallic harmonics a subtractive synth can't make — for DnB/neuro/electro where the bass needs *character*, not just weight.
-	- **Build it:**
-		1. TYPE `FM Synth` (p.58). Browse the factory FM presets and start from one you like → FM is far faster to modify than to build from a blank 4-op patch.
-		2. Pick an `ALGO` with a clear carrier chain (e.g. `A>B>C>D`) and set operator `RATIO`s to integers (`1.00`, `2.00`) → integer ratios stay harmonic and musical; non-integer ratios go clangy (Thread 2 covers why).
-		3. Add grit with operator feedback (`FBK`) or a higher modulator `RATIO`/`LEV` → feedback and deep modulation are where FM's edge comes from.
-		4. `MOD1` `ADSR` → a filter `CUTOFF` or an operator `LEV` → an envelope on a modulator level makes the timbre *evolve* as the note decays, instead of sitting static.
+	- **Build it (from a blank patch — no presets needed):**
+		The whole sound is really just **two operators**: a *carrier* you hear, and a *modulator* that vibrates the carrier's pitch fast enough to turn into timbre. Set those two, silence the other two.
+		1. TYPE `FM Synth` (p.58). Leave `ALGO` on the first one, `A>B>C>D` (`00`) — a single 4-operator chain. The arrows mean "modulates," so the **last operator `D` is the carrier** (the one you actually hear) and **`C` is its modulator**.
+		2. **Carrier — operator `D`:** shape `SIN`, `RATIO 1.00`, `LEV` full. This is the fundamental: `RATIO 1.00` plays the note you press, `2.00` an octave up, `0.50` an octave down (p.58).
+		3. **Modulator — operator `C`:** shape `SIN`, `RATIO 1.00`. Its `LEV` is the **FM amount (index)** — at `00` you hear a pure sine; raise it and harmonics pile on. Set it around a third up for now (this becomes the envelope's peak in step 6).
+		4. **Silence `A` and `B`:** set both their `LEV` to `00` so only the `C>D` pair sounds. You now have a clean 2-operator FM bass.
+		5. **Choose the timbre with the modulator `RATIO`.** Integer ratios stay harmonic and musical: `1.00` = round and warm, `2.00`/`3.00` = brighter and more hollow. A non-integer ratio (e.g. `1.41`) goes clangy and metallic — great for neuro/DnB bite, wrong for a clean sub (Thread 2 covers why).
+		6. **Make it evolve — the move that turns a static FM tone into a *bass*.** In the Modulation view (p.18) set `MOD1` to `ADSR`: ATK=00 DEC=30 SUS=00. Then in operator **`C`**'s `MOD` slot, route `MOD1` → `LEV`. C's level now snaps up on the attack and decays back toward `00` — the `LEV` destination sweeps the operator from `00` up to its set level (p.58) → the FM brightness *blooms, then fades to a near-pure tone*. That bright "pock" over a clean tail is the signature DX/FM bass shape. (Raise `SUS` if you want the harmonics to stay through held notes.)
+		7. **Add grit (optional):** raise operator `C`'s `FB` (feedback), or route a second envelope `MOD2` `ADSR` → C's `FBK`. Feedback frays the sine into a metallic edge a subtractive synth can't make.
 	- **Instrument EQ:** LOWCUT below 40Hz.
-	- **Common failure mode:** cranking modulation until it's pure noise — FM gets harsh fast. Back off modulator level until the pitch is clearly audible again.
+	- **Common failure mode:** cranking the modulator `LEV` until it's pure noise — FM gets harsh fast; back it off until the pitch is clearly audible again. If it sounds detuned or bell-like when you didn't want that, your `RATIO`s aren't landing on whole integers.
 
 ### Lead/melodic instruments
 

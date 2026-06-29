@@ -156,13 +156,15 @@ Every build below follows the same order — **pick the source, shape the amp en
 
 ## Thread 2: Synthesis fundamental — FM basics
 
-*Goal: stop being afraid of the FM Synth.*
+*Goal: stop being afraid of the FM Synth. Do this before (or alongside) the FM bass build above — it's the same two-operator patch, explored instead of aimed at a result.*
 
-- [ ] Open FM Synth instrument type (manual p.58). 4-op FM.
-- [ ] Concept: one operator's frequency modulates another's. The modulator's frequency RATIO to the carrier defines timbre.
-- [ ] Integer ratios (1:1, 1:2, 2:1) = harmonic, musical.
-- [ ] Non-integer ratios (1:1.41) = clangy, bell-like, metallic.
-- [ ] Play with operator ratios. Don't aim for mastery — just lose the fear.
+- [ ] Open FM Synth instrument type (manual p.58). 4-op FM, 12 algorithms.
+- [ ] Concept: one operator (the **modulator**) bends another's (the **carrier**) frequency fast enough to become *timbre* instead of audible vibrato. The modulator's `RATIO` to the carrier defines *which* harmonics appear; its `LEV` (the FM *index*) defines *how strong* they are.
+- [ ] Build the bare 2-op patch from the FM bass recipe: `ALGO 00`, carrier `D` (`SIN`, `RATIO 1.00`), modulator `C` (`SIN`), `A`/`B` silenced (`LEV 00`). Now you have just one knob — C's `RATIO` — to hear what FM actually does.
+- [ ] Sweep C's `RATIO`: integer ratios (`1.00`, `2.00`, `3.00`) = harmonic and musical; non-integer (`1.41`) = clangy, bell-like, metallic.
+- [ ] Sweep C's `LEV` from `00` up: `00` = pure sine, higher = more harmonics. This is the FM *index* — the single most important FM control.
+- [ ] Learn the routing wrinkle: to make timbre move over time you *don't* point an envelope at a global `DEST`. You set up `MOD1` as an `ADSR` in the Modulation view (p.18), then assign it *inside an operator's* `MOD` slot — e.g. operator `C` → `LEV` (p.58). That's exactly the FM bass "make it evolve" step, and it's the one thing that works differently from every other engine.
+- [ ] Don't aim for mastery — just lose the fear.
 
 ## Thread 3: Generative exploration
 

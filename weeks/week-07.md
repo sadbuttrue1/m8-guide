@@ -113,7 +113,10 @@ Every build below follows the same order — **pick the source, shape the amp en
 - [ ] **Snare** — `EG-Drum-Snare`
 	- **Use case:** the backbeat crack — a noise body plus a tonal "snap."
 	- **Build it:**
-		1. TYPE `Sampler` with a snare (simplest), OR layer two `Wavsynth` instruments: one `NOISE` for the body, one `SINE`/`TRIANGLE` for the tonal snap → real snares are noise + a tuned shell, and layering recreates that.
+		1. **Source (pick one) — a snare is noise + a tuned shell, so you want both parts:**
+			- `Sampler` with a snare sample → simplest.
+			- Two `Wavsynth` instruments layered — one `NOISE` body, one `SINE`/`TRIANGLE` tonal snap. M8 has no per-instrument layering, so "layer" here means putting the two on two tracks and triggering the same note on the same phrase row → this makes the noise-plus-shell model *visible*, at the cost of a second track.
+			- One `FM Synth` → the efficient single-instrument route, consistent with the kick above. Set `ALGO` to the last one (additive mode: all four operators run in parallel to the output, p.58). Give one operator a maxed `FB` for the noise body — cranking feedback all the way *is* how M8 FM generates noise — and a second operator a `SINE`/`CLICK` tuned via `RATIO` to sit ~200Hz for the tonal snap; balance the two with `LEV`. M8's own factory clap is this exact trick (maxed-out FM noise).
 		2. `MOD1` `DRUM ENV` (or `ADSR`) → `VOLUME`, short decay, no sustain → a snare is a fast burst, not a sustained tone.
 		3. `MOD2` `TRACKING` → `VOLUME`, SRC `VELOCITY` → ghost notes at low velocity, hard backbeats at high velocity = a human-feeling snare (p.20).
 		4. `FILTER` `BP` or `HP` on the noise layer → focuses the crack in the upper-mids.

@@ -136,7 +136,11 @@ Every build below follows the same order — **pick the source, shape the amp en
 	- **Build it:**
 		1. Start from a *copy* of the closed hat → the two should share a timbre and differ only in length, so the pair reads as one kit.
 		2. Lengthen the envelope: DEC=20 REL=10 → the longer tail is the only thing that makes it "open."
-		3. (optional) A `TRIG ENV` choke so a closed hat cuts the open hat's tail → real hi-hats can't ring while the pedal closes (p.20).
+		3. (optional) **`TRIG ENV` choke** so a closed hat cuts the open hat's tail → real hi-hats can't ring while the foot closes the pedal. A `TRIG ENV` is an AHD envelope (`ATK`/`HOLD`/`DEC`) that fires when *another* instrument or track plays — not the one it lives on — and it's **bipolar**, so it can push its `DEST` *down* as well as up (p.20–21). That negative push is the choke:
+			- On the **open hat**, add a `MOD` slot → `TRIG ENV`, `DEST` `VOLUME`, with a **negative `AMT`** big enough to slam the volume to zero.
+			- Set `SRC` to the **closed hat's instrument number** (`00`–`7F`), or to its **track** (`80`–`87` = Tracks 1–8) so *anything* on that lane chokes the open hat.
+			- Shape the duck with `ATK 00` (instant cut), then enough `HOLD`/`DEC` that the tail stays killed until the open hat would have died on its own.
+			- Now every closed-hat hit ducks the ringing open hat to silence, exactly like a real pedal closing.
 	- **Instrument EQ:** same as closed hat.
 	- **Common failure mode:** giving it a different timbre from the closed hat → the two stop sounding like the same instrument. Copy first, then only change length.
 

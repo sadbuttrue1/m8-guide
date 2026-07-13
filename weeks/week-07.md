@@ -183,19 +183,25 @@ See [Generative Toolkit Reference](../reference/generative.md) → #4 and #5 for
 
 This is what tables look like when they stop being step sequencers and become input-responsive instruments. Manual p.24, Table TIC Modes.
 
+**Where to find it (this is the part people miss):** there is no separate "TIC type" menu. `TABLE TIC` is a single numeric field in Instrument View — the one you normally leave at `01` (one tick per table row), `02` for two ticks, and so on (p.23). The special modes live at the *top* of that same field: dial the value all the way up past the tick-count range to hit `FC` = octave map, `FD` = velocity map, `FE` = note map, `FF` = 200 Hz (p.24). So "set it to `TICFD`" really means "scroll the `TABLE TIC` value up to `FD`" — the M8 doesn't show these as named options, just as the high hex values of the field. (The `TICxx` spelling is the FX-command form: dropping `TICFD` in a phrase or table FX column does the same thing and overrides the instrument's field — p.23.)
+
 **Recipe — velocity-mapped drum hit:**
 
 - [ ] Pick one of your starter drum instruments (kick or snare).
-- [ ] In Instrument View, set `TABLE TIC` to `TICFD` (velocity map).
+- [ ] In Instrument View, dial the `TABLE TIC` value up to `FD` (velocity map).
 - [ ] Enter the instrument's table. Each row now corresponds to a velocity range.
 - [ ] Row 00: leave default (lowest velocity hits)
-- [ ] Row 04: add `PIT` with small positive value (medium velocity = slight up-pitch)
-- [ ] Row 08: more `PIT` + slight volume boost
-- [ ] Row 0C: significant `PIT` + add reverb send via FX command
+- [ ] Row 04: add a small `FIN` (medium velocity = a touch tighter/higher — sub-semitone, so it doesn't detune)
+- [ ] Row 08: more `FIN` + a slight volume boost via a `VOL` FX command (see note below) + a little `CUTOFF` to open the tone
+- [ ] Row 0C: `FIN` at its top + a short `REV` send via FX command → the hardest hits read as "hit harder" through *tone*, not pitch
 - [ ] Now varying velocity on this drum produces real variations, not just volume changes.
 - [ ] **Save as a new instrument** (e.g. `EG-Drum-Snare-V` for velocity-responsive version).
 
-**Common failure mode:** forgetting to change `TABLE TIC`. Without setting it to `TICFD`/`TICFE`/`TICFC`, the table just plays linearly and none of the input mapping happens.
+**Why `FIN`, not `PIT`, on a tuned drum:** `PIT` moves in whole **semitones** and is **scale-quantized** (p.28), so on a snare (whose tuned shell is recognizable) a hard hit jumps to an obviously different pitch and just sounds *detuned*. `FIN` offsets by less than a semitone (p.75), giving lifelike variation without the "wrong note" effect. Carry most of the hard-vs-soft difference in **tone** (`CUTOFF`, a `REV`/`DEL` send) rather than pitch. On a non-tuned source (noise hat, FX) big `PIT` jumps are fair game.
+
+**On table volume — the `V` column is *relative*, not a boost:** the table's `V` (volume) column is *multiplied* by the phrase's `V` (p.24), so it can only scale the incoming level down/up proportionally — it can't add a fixed amount on its own. To actually *offset* the level on a row, use the **`VOL XX` FX command** ("offset the instrument volume", p.75) in one of the three FX columns. That's why the steps above put a volume *boost* in an FX column rather than in the `V` column.
+
+**Common failure mode:** forgetting to change `TABLE TIC`, or looking for a labeled "type" that isn't there. Until you raise the `TABLE TIC` value into the `FC`/`FD`/`FE` range, the table just plays linearly at that tick speed and none of the input mapping happens.
 
 ### Option B: Hypersynth (chord generation)
 

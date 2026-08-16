@@ -8,7 +8,7 @@ Use this page when balancing tracks against each other — before finalization. 
 
 **Two scopes:**
 - **Scope A — On-device M8 only.** Default. Mixer View, per-instrument EQ, send levels, TRIG-based side-chain. Used in Weeks 5, 8, 9.
-- **Scope B — Render stems to Ableton.** Optional upgrade for tracks you'll publish. Used in Week 10.
+- **Scope B — Render stems to Ableton.** Optional refinement when you want per-stem processing and DAW metering. Not needed to publish — see [Finalization Reference → Releasing a Scope A render](finalization.md#releasing-a-scope-a-render). Used in Week 10.
 
 **The hardest rule of mixing:** time-box. 60 min per session, max. If you've been mixing the same track for 3 hours, you've stopped hearing it.
 
@@ -176,7 +176,7 @@ Step-by-step. Target: 30–60 min depending on complexity.
 
 ## Scope B: Render stems to Ableton
 
-For tracks you'll publish. Used in Week 10.
+For when you want per-stem control the M8's 8 tracks can't give you. Used in Week 10. A Scope A mix is enough to publish.
 
 ### Stem rendering on M8
 
@@ -190,7 +190,7 @@ Manual: Render View (p.47), Selection to Sample (p.48).
 - [ ] `TRACKS`: selectively enable which tracks get rendered. Leave all 8 on for a full stem set.
 - [ ] `MODFX` / `DELAY` / `REVERB`: **on** — you want the M8 sound, including its sends, not raw oscillators.
 - [ ] `LIMITER`: **off** for Scope B — you're limiting in the master chain later, so don't bake it in.
-- [ ] `MODE`: `32`-bit if you're mixing in a DAW (more headroom); `16` is fine for casual sharing.
+- [ ] `MODE`: `32`-bit. Stems are working files headed into a DAW — take the faithful export.
 - [ ] `NAME`: name the render. Files land in `/Renders` on the SD card as 44.1kHz stereo WAVs.
 
 `STEMS` writes a file for each *enabled* track that actually has chains in the selected range — silent tracks are skipped, so expect up to 8 files, not always exactly 8.

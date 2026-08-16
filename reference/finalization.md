@@ -9,8 +9,8 @@ Use this page at the end of every finished track, **after mixing**. Linked from 
 **What this is NOT:** professional mastering. That's a multi-year skill with reference monitors, treated rooms, and trained ears. This is *finalization* — the basic polish that makes a track listenable.
 
 **Two scopes:**
-- **Scope A — On-device only (M8 mixer + limiter).** Default. Use this for Project 1 and any learning track.
-- **Scope B — M8 + minimal Ableton pass.** Optional upgrade for tracks you'll share or publish (Project 2 onwards).
+- **Scope A — On-device only (M8 mixer + limiter).** Default. Use this for every track, including ones you release. **A Scope A render is a releasable file** — see [Releasing a Scope A render](#releasing-a-scope-a-render) below.
+- **Scope B — M8 + minimal Ableton pass.** Optional refinement: metering, surgical EQ, precise loudness targeting. Not a requirement for publishing.
 
 **The most important rule:** time-box this. If you've been finalizing for over 60 minutes, you're hurting more than helping. Render, walk away.
 
@@ -68,17 +68,76 @@ The limiter prevents clipping and increases perceived loudness.
 ### Step 6: Render (5 min)
 
 - [ ] Project View → Render (manual p.47).
-- [ ] Render settings: 44.1kHz WAV, MODE 16- or 32-bit (the M8's only two render bit depths — there is no 24-bit). Use 32-bit if planning a Scope B mastering pass; 16-bit if M8-only is the final.
+- [ ] Render settings: 44.1kHz WAV, MODE 16- or 32-bit (the M8's only two render bit depths — there is no 24-bit). **Default to 32-bit** — it's the faithful export and the one worth keeping, whether or not a Scope B pass follows. See [Which bit depth, and why it barely matters](#which-bit-depth-and-why-it-barely-matters).
 - [ ] Save with a clear filename and date.
 - [ ] **Done. Walk away.**
 
 ---
 
+## Releasing a Scope A render
+
+**You do not need a DAW to publish an M8 track.** The M8 renders a 44.1kHz stereo WAV (p.47) — that *is* the delivery format Bandcamp, Soundcloud, and every distributor (DistroKid, TuneCore, etc.) accept. And everything a mastering chain does, the M8 has on the main bus: all tracks and sends run through OTT → main EQ → limiter → DJ filter → main volume (p.30), with a scope and a peak readout to set it by (p.34).
+
+What the M8 *doesn't* have is **metering**: it shows sample peak in dB, not integrated LUFS and not true peak. That's the entire gap. It's a measurement gap, not a capability gap.
+
+### Why you don't need to chase a LUFS number
+
+Every major platform loudness-normalizes on playback — Spotify and YouTube to around −14 LUFS, Apple Music to around −16. A quiet master gets turned **up**; an over-limited master gets turned **down** and keeps all the damage you did making it loud. So the target isn't "hit −14 LUFS." The target is **clean, controlled, and not clipped** — which you can judge on the device.
+
+If you master by ear to the point where nothing distorts and the limiter is doing 2–4dB on peaks, you are inside the window where normalization does the rest.
+
+### The one real trap: `MIX` is post-limiter
+
+`MIX` (main mix volume) is applied **after** the limiter stage (p.34). This matters enormously: if you set a good limiter and then push `MIX` up for loudness, you are adding gain the limiter can no longer catch, and you will clip the render. The limiter's ceiling is not the file's ceiling — `MIX` is.
+
+Set them in this order: **`LIM` for control, then `MIX` for output level.** Never the reverse.
+
+### Release checklist
+
+Do this after Step 6, before you upload anything.
+
+- [ ] Set `LIM` first (Step 4 above). 2–4dB of activity on peaks.
+- [ ] Go to Limiter & Mix Scope View, select `PEAK`, clear it with `[OPT]+[EDIT]`.
+- [ ] Play the **loudest section** of the track all the way through. Let `PEAK` capture it.
+- [ ] Read `PEAK`. **Target around `-1.0 dB`.** That's your headroom for lossy encoding — MP3/AAC conversion can overshoot the sample peaks slightly, and platforms encode everything.
+- [ ] If `PEAK` is at or near `0.0`, or you see a red bar on the Mixer meter: **pull `MIX` down**, don't touch the limiter. Clear `PEAK` and re-run.
+- [ ] `SOFT CLIP` only if you want the warmth — it's not a safety net, and it changes the sound.
+- [ ] Render View: `MIXED` mode, `LIMITER` **on** (so the master limiter you just set is baked into the file), `MODFX` / `DELAY` / `REVERB` **on**, `MODE` `32`-bit.
+- [ ] Rename the file from `/Renders` and upload it. That's the release.
+
+### Which bit depth, and why it barely matters
+
+**Render `32`-bit and keep that as your master.** It's the M8's most faithful export — the synthesis engine runs at 32-bit internally, so a 32-bit render is the file with nothing thrown away. It costs you disk space and nothing else. It's also the file you'd hand to a Scope B pass, a remaster, or a re-release years later.
+
+For the *upload*, the honest answer is that **it makes no audible difference on a finished, limited master.** 16-bit gives you about 96dB of dynamic range, which is far more than a limited master uses. Nobody has ever heard the difference on a track like this.
+
+So:
+
+- [ ] **Default to `32`-bit.** Best archive, no downside beyond file size.
+- [ ] **If an uploader rejects it**, just re-render at `16`-bit. The M8's 32-bit WAVs are integer, not float (community: The M8 Companion), and some distributor intake tools only expect 16- or 24-bit. The M8 has no 24-bit option.
+- [ ] Re-rendering is free and takes a minute — **don't convert the file yourself** to work around a rejection. Let the M8 produce both.
+
+What you should *not* do is agonize over this. Bit depth is the least consequential decision in this entire page.
+
+**One caveat on OTT:** community reports from Dirtywave's own dev meetups say OTT is only applied when you render from Render View in `MIXED` mode — a quick selection-render doesn't include it, by design. If you're relying on OTT as part of your master, render the proper way.
+
+### Optional: check the loudness off-device
+
+If you want the number, you don't need Ableton for it — a free web loudness analyzer or a phone LUFS meter app will read integrated LUFS off the rendered WAV. Useful as a **one-time calibration**: measure two or three of your finished tracks, learn where your ear naturally lands, then stop measuring.
+
+This is a check, not a processing step. If it reads −18 LUFS and sounds good, upload it anyway — the platform will bring it up.
+
+### What Scope B actually buys you
+
+Not permission to publish. It buys metering you can trust, EQ moves finer than 3 bands, and the ability to hit a specific loudness on purpose. Worth it eventually. **Not worth blocking a release on.**
+
+---
+
 ## Scope B: Optional Ableton mastering pass
 
-Use this for Project 2 onward, or any track you'll share/publish. **If you already own Ableton, this isn't new gear.**
+Optional. Use it when you want metering and finer tools than the M8's 3-band main EQ — not because a track "needs" it to be published. **If you already own Ableton, this isn't new gear.**
 
-Goal: take the M8-rendered WAV and do a minimal mastering pass to hit streaming loudness targets and improve clarity. **30 minutes max.**
+Goal: take the M8-rendered WAV and do a minimal mastering pass to hit a specific loudness target and improve clarity. **30 minutes max.**
 
 ### Setup
 

@@ -18,13 +18,17 @@
 
 Reference: Mixing Reference → Scope B → Stem rendering.
 
+M8 does this in one pass — Render View has a `STEMS` mode that writes a separate WAV per track (manual p.47). Don't mute-and-render eight times.
+
 - [ ] Open Project 2 on M8.
-- [ ] Render each of the 8 tracks individually:
-	- Mute all tracks except track 1. Render. Save as `Project2_T1.wav`.
-	- Mute all except track 2. Render. Save as `Project2_T2.wav`.
-	- Repeat through track 8.
-- [ ] Keep per-instrument EQ and effects on M8 — render the M8 sound, not raw oscillators.
-- [ ] You should now have up to 8 stem WAV files.
+- [ ] Project View → `RENDER`.
+- [ ] Set the render mode to `STEMS` (not `MIXED`).
+- [ ] `SONG ROW START` / `SONG ROW LAST`: cover the whole song. `TRACKS`: all 8 enabled.
+- [ ] `MODFX`, `DELAY`, `REVERB`: **on** — render the M8 sound, including sends, not raw oscillators.
+- [ ] `LIMITER`: **off** — you're limiting in the master chain in Session 2.
+- [ ] `MODE`: `32`-bit for DAW headroom.
+- [ ] `NAME` it, then render. Files land in `/Renders` on the SD card.
+- [ ] Copy `/Renders` off the card. You should have up to 8 stem WAVs — tracks with no chains in range are skipped.
 
 ### Step 2: Scope B mix in Ableton (40 min)
 

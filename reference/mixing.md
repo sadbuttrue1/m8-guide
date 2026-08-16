@@ -180,12 +180,22 @@ For tracks you'll publish. Used in Week 10.
 
 ### Stem rendering on M8
 
+M8 renders stems natively — one pass, one file per track. No muting, no re-rendering eight times.
+
 Manual: Render View (p.47), Selection to Sample (p.48).
 
-- [ ] In Song View, mute all tracks except one.
-- [ ] Render the song. You get a WAV of just that track.
-- [ ] Repeat for each of 8 tracks. End up with 8 stems.
-- [ ] Tip: keep all track effects/EQ as-is on M8 — you're rendering the M8 sound, not raw oscillators.
+- [ ] Project View → `RENDER` to open Render View.
+- [ ] Set the bottom switch to `STEMS` (the other option, `MIXED`, gives you one stereo file of the whole song).
+- [ ] `SONG ROW START` / `SONG ROW LAST`: the range to render. `REPEAT SONG` if you want multiple passes captured.
+- [ ] `TRACKS`: selectively enable which tracks get rendered. Leave all 8 on for a full stem set.
+- [ ] `MODFX` / `DELAY` / `REVERB`: **on** — you want the M8 sound, including its sends, not raw oscillators.
+- [ ] `LIMITER`: **off** for Scope B — you're limiting in the master chain later, so don't bake it in.
+- [ ] `MODE`: `32`-bit if you're mixing in a DAW (more headroom); `16` is fine for casual sharing.
+- [ ] `NAME`: name the render. Files land in `/Renders` on the SD card as 44.1kHz stereo WAVs.
+
+`STEMS` writes a file for each *enabled* track that actually has chains in the selected range — silent tracks are skipped, so expect up to 8 files, not always exactly 8.
+
+**Caveat:** External Instrument tracks can't be rendered this way — the audio is processed in real time. Capture those with the Sample Editor instead, selecting the playing track as input source (p.62).
 
 ### Minimal Ableton mix
 

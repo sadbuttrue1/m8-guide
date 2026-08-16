@@ -61,11 +61,21 @@ Problems on 2+ systems consistently?
 - [ ] If yes, one issue: one fix allowed. Re-render.
 - [ ] If yes, multiple issues: ship as-is. Note for next cycle.
 
-### Step 3: Ship it (25 min)
+### Step 3: Release check (10 min)
+
+Same as Week 6 — Project 2 gets a release-grade file off the M8 too, no DAW involved. Full context: [Finalization Reference → Releasing a Scope A render](../reference/finalization.md#releasing-a-scope-a-render).
+
+- [ ] Limiter & Mix Scope View → `PEAK`, clear with `[OPT]+[EDIT]`.
+- [ ] Play the loudest section. Read `PEAK`. **Target around `-1.0 dB`.**
+- [ ] Too hot? Pull `MIX` down, not `LIM` — `MIX` sits *after* the limiter (p.34).
+- [ ] Re-render `MIXED`, `LIMITER` **on**, `MODE` `32`-bit. That file is uploadable as-is; re-render at `16` only if a distributor rejects it.
+
+### Step 4: Ship it (15 min)
 
 - [ ] Rename: `Project2_FINAL.wav`.
 - [ ] Send to at least one person outside your ears.
 - [ ] Optional: post somewhere (Bandcamp unlisted, Soundcloud private, Discord) — doesn't need to be public.
+- [ ] If you want it on streaming: this file goes straight to a distributor. Week 10 is not a prerequisite.
 
 ---
 
@@ -80,7 +90,7 @@ Problems on 2+ systems consistently?
 ## After Week 9
 
 - [ ] **Take a deliberate week off.** No M8. No other gear. No browsing.
-- [ ] Optional: do Week 10 (Scope B Ableton mix + master) on Project 2 if you want a release-ready, streaming-loudness version.
+- [ ] Optional: do Week 10 (Scope B Ableton mix + master) on Project 2 if you want DAW metering and a loudness target you can hit on purpose. **Project 2 is already releasable without it.**
 - [ ] Then reflect: write notes on what worked, what didn't, what to carry into the next learning cycle.
 
 ---

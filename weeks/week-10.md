@@ -1,8 +1,10 @@
 # Week 10 — Scope B mix + master in Ableton (optional)
 
-**This week is optional.** Skip if Project 2's Scope A version (Week 9) is good enough, or if you're burnt out, or if you don't care about streaming loudness.
+**This week is optional, and it is not the week where the track becomes releasable.** Project 2's Week 9 render is already a delivery-format file you can upload — see [Finalization Reference → Releasing a Scope A render](../reference/finalization.md#releasing-a-scope-a-render). Skip this week if that version is good enough, or if you're burnt out.
 
-**Goal:** Take Project 2's stems through a Scope B pass in Ableton. End with a release-ready file you'd publish to Bandcamp/Soundcloud/Spotify.
+**What Week 10 actually adds:** metering you can trust (integrated LUFS, true peak), EQ finer than the M8's 3 bands, per-stem processing, and the ability to hit a loudness target deliberately instead of by ear.
+
+**Goal:** Take Project 2's stems through a Scope B pass in Ableton. End with a more precisely finished version of a track you could already have published.
 
 **Time commitment:** 3 sessions, 60 min each. **Hard limits.**
 
@@ -26,7 +28,7 @@ M8 does this in one pass — Render View has a `STEMS` mode that writes a separa
 - [ ] `SONG ROW START` / `SONG ROW LAST`: cover the whole song. `TRACKS`: all 8 enabled.
 - [ ] `MODFX`, `DELAY`, `REVERB`: **on** — render the M8 sound, including sends, not raw oscillators.
 - [ ] `LIMITER`: **off** — you're limiting in the master chain in Session 2.
-- [ ] `MODE`: `32`-bit for DAW headroom.
+- [ ] `MODE`: `32`-bit — the faithful export, which is what you want going into a DAW.
 - [ ] `NAME` it, then render. Files land in `/Renders` on the SD card.
 - [ ] Copy `/Renders` off the card. You should have up to 8 stem WAVs — tracks with no chains in range are skipped.
 

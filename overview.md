@@ -85,7 +85,9 @@ Finishing a track means making it sound finished, not just rendering raw. Two st
 
 ### Mastering / finalization (polish the mixed track)
 - **Scope A (on-device M8 only)**: default. Built-in EQ, OTT, limiter, soft-clip via Mixer and Limiter & Mix Scope views. Used Week 6 (Project 1), Week 9 (Project 2).
-- **Scope B (optional Ableton pass)**: for tracks you'll share or publish. Used Week 10 only.
+- **Scope B (optional Ableton pass)**: optional refinement — metering, finer EQ, deliberate loudness targeting. Used Week 10 only.
+
+**You can release a track straight off the M8.** The render is a 44.1kHz stereo WAV, which is the format distributors and Bandcamp/Soundcloud accept, and the main bus has a real master chain. The one thing the M8 lacks is LUFS metering — and since streaming platforms normalize loudness on playback anyway, that matters less than it sounds. Both Project 1 and Project 2 ship as releasable files. See [Finalization Reference → Releasing a Scope A render](reference/finalization.md#releasing-a-scope-a-render).
 
 **Always mix before you master.** Mastering can't fix a bad mix. Both stages are time-boxed: 60 min max per session.
 

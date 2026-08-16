@@ -6,7 +6,7 @@ No new technique. No new mixing. Just finalize, render, share.
 
 **Reference (read first):** [Finalization Reference](../reference/finalization.md) — Scope A workflow.
 
-**Time-box:** 60 min for finalization, 30 min for verification, total ~90 min over 1–2 sessions.
+**Time-box:** 60 min for finalization, 35 min for verification and release, total ~95 min over 1–2 sessions.
 
 ---
 
@@ -53,7 +53,7 @@ The M8 gives no single "gain reduction = 3dB" number — you're eyeballing that 
 ### Step 5: Render (5 min)
 
 - [ ] Project View → Render.
-- [ ] 44.1kHz, 16-bit WAV (or 32-bit if planning Week 10 Scope B — the M8 renders 16- or 32-bit, not 24).
+- [ ] 44.1kHz WAV, `MODE` `32`-bit. The M8 renders 16- or 32-bit only (no 24) — 32 is the faithful export and the one worth keeping, whether or not Week 10 follows.
 - [ ] Save with clear filename: `Project1_master_v1.wav` or similar.
 
 ### Step 6: First listen (20 min, fresh)
@@ -64,7 +64,7 @@ The M8 gives no single "gain reduction = 3dB" number — you're eyeballing that 
 
 ---
 
-## Session 2 (~30 min) — Multi-system verification + ship
+## Session 2 (~35 min) — Multi-system verification + ship
 
 ### Step 1: Three-system listening test (15 min)
 
@@ -83,7 +83,18 @@ Are there problems on **2+ systems consistently**?
 - [ ] If yes, one consistent issue: **one allowed fix**. Adjust master, re-render. **Done.**
 - [ ] If yes, multiple consistent issues: the mix has problems. Note them for next time. **Ship as-is anyway.**
 
-### Step 3: Ship it (5 min)
+### Step 3: Release check (5 min)
+
+The M8's render is a real delivery file — 44.1kHz stereo WAV is what Bandcamp, Soundcloud, and distributors accept. You don't need a DAW to publish this. Full context: [Finalization Reference → Releasing a Scope A render](../reference/finalization.md#releasing-a-scope-a-render).
+
+- [ ] Limiter & Mix Scope View → select `PEAK`, clear it with `[OPT]+[EDIT]`.
+- [ ] Play the **loudest section** through. Read `PEAK`. **Target around `-1.0 dB`.**
+- [ ] If it's at `0.0` or the Mixer meter shows red: pull `MIX` down — **not** the limiter. `MIX` is applied *after* the limiter (p.34), so it's `MIX` that clips your render, not `LIM`.
+- [ ] Re-render with `LIMITER` **on**, `MODE` `32`-bit. Only drop to `16` if an uploader rejects the file — re-rendering is free, don't convert it yourself.
+
+**Don't chase a loudness number.** Streaming platforms normalize on playback (≈−14 LUFS), so they turn quiet masters up and loud ones down. Clean and controlled beats loud.
+
+### Step 4: Ship it (5 min)
 
 - [ ] Rename final WAV: `Project1_FINAL.wav` (or your naming).
 - [ ] Put it somewhere you won't lose it.

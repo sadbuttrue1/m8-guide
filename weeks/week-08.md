@@ -6,7 +6,7 @@
 
 **This is the week the "meander" problem gets fixed.**
 
-**Manual references:** Song View (p.10), Chain View (p.12), Phrase View (p.14), Time Stats View (p.46).
+**Manual references:** Song View (manual p.10), Chain View (manual p.12), Phrase View (manual p.14), Time Stats View (manual p.46).
 
 ---
 

@@ -2,6 +2,10 @@
 
 9-week plan (+ optional Week 10) to rebuild fluency on the Dirtywave M8, ship two tracks, and close five specific gaps: instrument tables, sound design, arrangement, mixing, mastering.
 
+## How page references work
+
+Citations like **(manual p.32)** point to a page in the **M8 Operation Manual v6.5.2** — a separate document from Dirtywave, not a page of this plan. Every factual claim about how the M8 behaves is traceable to one, so you can check it rather than take this plan's word for it. Where a claim comes from the community instead, it says so.
+
 ## A note before you read
 
 This plan was built for a producer who realized they had a drawer full of trackers, grooveboxes and samplers but no recent finished tracks. The diagnosis was simple: they kept buying new gear to spark ideas instead of going deeper into the tools that already worked. M8 was the one device that produced finished work in the past, so they built a plan to rebuild fluency, close their real gaps, and ship tracks again.
@@ -74,6 +78,9 @@ Three phases. Each week is an epic with granular tasks and a clear deliverable.
 - [Mixing Reference](reference/mixing.md) — used Week 5 onwards for balancing tracks
 - [Finalization Reference](reference/finalization.md) — used Week 6, 9, 10 for mastering after mixing
 - [Generative Toolkit Reference](reference/generative.md) — six generative techniques (LFO shapes, phrase randomization, table TIC modes, Hypersynth, table-as-arpeggiator) woven into Weeks 2, 4, 7, 8
+- [Timing Reference](reference/timing.md) — ticks, PPQ, groove and `MTT`, consulted from Weeks 2, 4, 7
+- [Firmware Reference](reference/firmware.md) — what firmware 6.6.0/6.6.1 changed for this plan
+- [Troubleshooting Reference](reference/troubleshooting.md) — when the device, not the track, is the problem
 
 ## Mixing and mastering
 

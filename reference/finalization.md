@@ -18,7 +18,7 @@ Use this page at the end of every finished track, **after mixing**. Linked from 
 
 ## Scope A: On-device M8 finalization
 
-Manual references: Mixer View (p.30), EQ Editor View (p.32), Limiter & Mix Scope View (p.34), Effect Settings View (p.36), Render View (p.47).
+Manual references: Mixer View (manual p.30), EQ Editor View (manual p.32), Limiter & Mix Scope View (manual p.34), Effect Settings View (manual p.36), Render View (manual p.47).
 
 The M8 has a real mastering chain built into the Mixer: track volumes → send effects (ModFX, Delay, Reverb) → OTT compressor → main EQ → Limiter → DJ filter → Main mix volume. Use it.
 
@@ -33,7 +33,7 @@ This is a quick verification, not a real mix. The real mix should have happened 
 
 ### Step 2: Main mix EQ (10 min)
 
-- [ ] In Mixer View, select `EQ` and press `[SHIFT]+[RIGHT]` or `[EDIT]` to enter EQ Editor View (p.32).
+- [ ] In Mixer View, select `EQ` and press `[SHIFT]+[RIGHT]` or `[EDIT]` to enter EQ Editor View (manual p.32).
 - [ ] M8 main mix EQ has 3 bands (LOW, MID, HIGH).
 - [ ] **High-pass the mix** at the LOW band: TYPE = `LOWCUT`, FREQ around 30Hz. Removes subsonic rumble that eats limiter headroom.
 - [ ] **Optional gentle MID adjustments:** if the track sounds boxy (200–400Hz buildup), small cut. If it sounds dull, small high-shelf boost on HIGH band around 8–12kHz.
@@ -52,7 +52,7 @@ OTT (Over The Top) is parallel multi-band upward/downward compression. Brings fo
 
 The limiter prevents clipping and increases perceived loudness.
 
-- [ ] In Mixer View, select `LIM` and press `[SHIFT]+[RIGHT]` to enter Limiter & Mix Scope View (p.34).
+- [ ] In Mixer View, select `LIM` and press `[SHIFT]+[RIGHT]` to enter Limiter & Mix Scope View (manual p.34).
 - [ ] `LIM` parameter: start at `40`, push up while watching the scope.
 - [ ] White line on the MIX indicator shows compression activity. **2–4dB of compression on peaks is healthy. 6dB+ is squashing the dynamics.**
 - [ ] `ATK` (attack): `20–40` is a safe range. Faster = more aggressive limiting.
@@ -76,7 +76,7 @@ The limiter prevents clipping and increases perceived loudness.
 
 ## Releasing a Scope A render
 
-**You do not need a DAW to publish an M8 track.** The M8 renders a 44.1kHz stereo WAV (p.47) — that *is* the delivery format Bandcamp, Soundcloud, and every distributor (DistroKid, TuneCore, etc.) accept. And everything a mastering chain does, the M8 has on the main bus: all tracks and sends run through OTT → main EQ → limiter → DJ filter → main volume (p.30), with a scope and a peak readout to set it by (p.34).
+**You do not need a DAW to publish an M8 track.** The M8 renders a 44.1kHz stereo WAV (manual p.47) — that *is* the delivery format Bandcamp, Soundcloud, and every distributor (DistroKid, TuneCore, etc.) accept. And everything a mastering chain does, the M8 has on the main bus: all tracks and sends run through OTT → main EQ → limiter → DJ filter → main volume (manual p.30), with a scope and a peak readout to set it by (manual p.34).
 
 What the M8 *doesn't* have is **metering**: it shows sample peak in dB, not integrated LUFS and not true peak. That's the entire gap. It's a measurement gap, not a capability gap.
 
@@ -88,7 +88,7 @@ If you master by ear to the point where nothing distorts and the limiter is doin
 
 ### The one real trap: `MIX` is post-limiter
 
-`MIX` (main mix volume) is applied **after** the limiter stage (p.34). This matters enormously: if you set a good limiter and then push `MIX` up for loudness, you are adding gain the limiter can no longer catch, and you will clip the render. The limiter's ceiling is not the file's ceiling — `MIX` is.
+`MIX` (main mix volume) is applied **after** the limiter stage (manual p.34). This matters enormously: if you set a good limiter and then push `MIX` up for loudness, you are adding gain the limiter can no longer catch, and you will clip the render. The limiter's ceiling is not the file's ceiling — `MIX` is.
 
 Set them in this order: **`LIM` for control, then `MIX` for output level.** Never the reverse.
 

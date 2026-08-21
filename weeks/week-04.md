@@ -4,9 +4,11 @@
 
 This is the last pure-technique week before Phase 2 (Apply).
 
-Both commands are documented in the manual: `ARP` (p.8, p.28) and `RET` (Sequencer FX Commands, p.69 — "Retrigger the current row with volume ramping"). The in-device **Effect Command Help view** is still the fastest way to confirm a command is valid for the current instrument type.
+Both commands are documented in the manual: `ARP` (manual p.8, p.28) and `RET` (Sequencer FX Commands, p.69 — "Retrigger the current row with volume ramping"). The in-device **Effect Command Help view** is still the fastest way to confirm a command is valid for the current instrument type.
 
-**Manual references:** Effect Command Help View (p.48), Sequencer FX Commands (p.69), Instrument FX Commands (p.75), Common Groove Examples (p.81).
+**Manual references:** Effect Command Help View (manual p.48), Sequencer FX Commands (manual p.69), Instrument FX Commands (manual p.75), Common Groove Examples (manual p.81).
+
+`RET` values are counted in **ticks**, and a phrase row is 6 ticks — so `RET 03` fires twice per row and `RET 06` fires once, which sounds like nothing happened. If tick values, groove and swing are unfamiliar, read the [Timing Reference](../reference/timing.md) first; it's a short page and it makes this week's values mean something.
 
 ---
 

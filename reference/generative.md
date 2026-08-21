@@ -4,7 +4,7 @@ The M8 has a family of generative features. They serve different musical purpose
 
 **Strategy:** if a generative feature isn't clicking, you're probably using it for the wrong use case. Match the technique to the goal.
 
-**Manual references:** Phrase View shortcuts (p.15), LFO modulation type (p.20–21), Table View + TIC modes (p.24), Hypersynth (p.60).
+**Manual references:** Phrase View shortcuts (manual p.15), LFO modulation type (manual p.20–21), Table View + TIC modes (manual p.24), Hypersynth (manual p.60).
 
 ---
 
@@ -134,7 +134,7 @@ Manual: Hypersynth, p.60. The Hypersynth section is dense — budget 30 min to e
 
 **Use case:** One note in Phrase View should trigger an evolving phrase — arpeggio, melodic riff, or sequence of pitches/effects that plays automatically.
 
-This is what tables were designed for. Per the manual (p.24): "Tables are little sequencers that play alongside instruments... an incredibly powerful tool to transform instruments and compositions, from arpeggios and volume slides to multi-stage envelopes and effects."
+This is what tables were designed for. Per the manual (manual p.24): "Tables are little sequencers that play alongside instruments... an incredibly powerful tool to transform instruments and compositions, from arpeggios and volume slides to multi-stage envelopes and effects."
 
 **Recipe — generative arpeggio:**
 - [ ] On a melodic instrument, set `TABLE TIC` to a low tick value like `02` or `04` (faster table playback than the phrase).

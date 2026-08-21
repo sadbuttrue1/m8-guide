@@ -9,7 +9,8 @@ Reading order:
   2. Table of contents (auto-computed page numbers)
   3. overview.md
   4. weeks/week-01.md through weeks/week-10.md
-  5. reference/mixing.md, finalization.md, generative.md
+  5. reference/mixing.md, finalization.md, generative.md,
+     timing.md, firmware.md, troubleshooting.md
   6. About this document (closing page)
 
 Usage:
@@ -485,6 +486,9 @@ def build_story(toc_data=None):
         ("    Mixing Reference", "ref-mixing"),
         ("    Finalization Reference", "ref-finalization"),
         ("    Generative Toolkit Reference", "ref-generative"),
+        ("    Timing Reference", "ref-timing"),
+        ("    Firmware Reference", "ref-firmware"),
+        ("    Troubleshooting Reference", "ref-troubleshooting"),
     ]
     toc_rows = []
     for title, key in toc_items:
@@ -543,6 +547,9 @@ def build_story(toc_data=None):
         ("mixing", "ref-mixing"),
         ("finalization", "ref-finalization"),
         ("generative", "ref-generative"),
+        ("timing", "ref-timing"),
+        ("firmware", "ref-firmware"),
+        ("troubleshooting", "ref-troubleshooting"),
     ]:
         story.append(PageBreak())
         section_anchors[key] = len(story)
@@ -616,6 +623,9 @@ def get_page_for_flowable_index(doc_path, section_anchors):
         "ref-mixing": "Mixing Reference",
         "ref-finalization": "Finalization Reference",
         "ref-generative": "Generative Toolkit Reference",
+        "ref-timing": "Timing Reference",
+        "ref-firmware": "Firmware Reference",
+        "ref-troubleshooting": "Troubleshooting Reference",
     }
     result = {}
     for key, title in title_map.items():

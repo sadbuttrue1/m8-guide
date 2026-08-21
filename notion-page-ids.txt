@@ -19,6 +19,9 @@ Reference pages:
   3656d3b8-eb13-817a-8429-ec0b288a53db  Mixing Reference
   3656d3b8-eb13-8109-8a14-ca5adbc6debb  Finalization Reference
   3656d3b8-eb13-819f-8ce3-d1cf7d83f6c0  Generative Toolkit Reference
+  3c36d3b8-eb13-81a8-b192-d9af7c071b5c  Timing Reference
+  3c36d3b8-eb13-812d-8ed0-dcd48508b903  Firmware Reference
+  3c36d3b8-eb13-8173-9f4c-e85e74330bcf  Troubleshooting Reference
 
 Markdown file mapping:
   parent       → overview.md
@@ -26,3 +29,9 @@ Markdown file mapping:
   Mixing       → reference/mixing.md
   Finalization → reference/finalization.md
   Generative   → reference/generative.md
+  Timing       → reference/timing.md
+  Firmware     → reference/firmware.md
+  Troubleshoot → reference/troubleshooting.md
+
+Translations under translations/<lang>/ have NO Notion counterpart. Do not
+create or sync translated Notion pages. See CLAUDE.md → Translations.

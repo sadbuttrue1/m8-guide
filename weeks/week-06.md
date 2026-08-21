@@ -43,7 +43,7 @@ This is a *verification*, not a real mix. You did the real mix last week.
 - [ ] `ATK`: `20–40`. `REL`: `00` (AUTO).
 - [ ] `SOFT CLIP`: gentle. Adds warmth.
 
-**How to read the compression:** With `LIM` selected, the scope shows the input signal along the bottom and the **limiter activity highlighted along the top** — that top band *is* the compression (p.34). The further it dips **down from the top**, the more gain reduction on that peak. A thin sliver = barely working; a thick band carving in continuously = past 6dB, back off `LIM`. (On the `MIX` indicator the same activity shows as a white line, p.30.) Play the loudest section and judge the band there, not on quiet parts.
+**How to read the compression:** With `LIM` selected, the scope shows the input signal along the bottom and the **limiter activity highlighted along the top** — that top band *is* the compression (manual p.34). The further it dips **down from the top**, the more gain reduction on that peak. A thin sliver = barely working; a thick band carving in continuously = past 6dB, back off `LIM`. (On the `MIX` indicator the same activity shows as a white line, manual p.30.) Play the loudest section and judge the band there, not on quiet parts.
 
 - [ ] `ZOOM` sets the scope's lower limit **in dB** — set it so the few-dB window you care about is legible instead of a guess.
 - [ ] `PEAK` shows the main mix's current peak dB (resets on `MIX`/`LIM` change; clear with `[OPT]+[EDIT]`). Use it to confirm you're controlling peaks, not crushing the body.
@@ -89,7 +89,7 @@ The M8's render is a real delivery file — 44.1kHz stereo WAV is what Bandcamp,
 
 - [ ] Limiter & Mix Scope View → select `PEAK`, clear it with `[OPT]+[EDIT]`.
 - [ ] Play the **loudest section** through. Read `PEAK`. **Target around `-1.0 dB`.**
-- [ ] If it's at `0.0` or the Mixer meter shows red: pull `MIX` down — **not** the limiter. `MIX` is applied *after* the limiter (p.34), so it's `MIX` that clips your render, not `LIM`.
+- [ ] If it's at `0.0` or the Mixer meter shows red: pull `MIX` down — **not** the limiter. `MIX` is applied *after* the limiter (manual p.34), so it's `MIX` that clips your render, not `LIM`.
 - [ ] Re-render with `LIMITER` **on**, `MODE` `32`-bit. Only drop to `16` if an uploader rejects the file — re-rendering is free, don't convert it yourself.
 
 **Don't chase a loudness number.** Streaming platforms normalize on playback (≈−14 LUFS), so they turn quiet masters up and loud ones down. Clean and controlled beats loud.

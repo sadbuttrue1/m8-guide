@@ -54,6 +54,9 @@ Mirror of the [Notion source](https://www.notion.so/Learning-M8-3656d3b8eb1381d6
 - [Mixing Reference](reference/mixing.md) — used Week 5 onwards for balancing tracks
 - [Finalization Reference](reference/finalization.md) — used Week 6, 9, 10 for mastering
 - [Generative Toolkit Reference](reference/generative.md) — generative features woven into Weeks 2, 4, 7, 8
+- [Timing Reference](reference/timing.md) — ticks, PPQ, groove, `MTT`
+- [Firmware Reference](reference/firmware.md) — firmware 6.6.0/6.6.1 changes relevant to the plan
+- [Troubleshooting Reference](reference/troubleshooting.md) — device-level failures and their official fixes
 
 ## How to use this with Claude Code
 

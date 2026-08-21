@@ -4,7 +4,7 @@
 
 **The big realization for this week:** the M8 has 4 dedicated modulation slots per instrument before you even touch tables. For "LFO to filter," the modulation slot is usually the right tool. Tables are for *stepped* automation, arpeggios, multi-stage envelopes — things slots can't do cleanly.
 
-**Manual references:** Instrument Modulation View (p.18), Modulation Types: LFO (p.20–21), Table View (p.24), Macrosynth (p.52), Effect Command Help View (p.48).
+**Manual references:** Instrument Modulation View (manual p.18), Modulation Types: LFO (manual p.20–21), Table View (manual p.24), Macrosynth (manual p.52), Effect Command Help View (manual p.48).
 
 ---
 
@@ -16,7 +16,7 @@ This is the clean, idiomatic way.
 
 - [ ] Open the bass instrument in Project 1. Make sure `TYPE` is `Macrosynth` (manual p.52).
 - [ ] In Instrument View, the Macrosynth has a `FILTER` parameter section with `CUTOFF` and `RES`. Set `CUTOFF` to a low-ish value (~`40`) so there's room for the LFO to open it.
-- [ ] Navigate `[SHIFT]+[UP]` from Instrument View → Instrument Modulation View (p.18).
+- [ ] Navigate `[SHIFT]+[UP]` from Instrument View → Instrument Modulation View (manual p.18).
 - [ ] You'll see 4 modulation slots (`MOD1`–`MOD4`). Each has TYPE, DEST, and parameters.
 - [ ] Configure `MOD1`:
 	- `MOD1` type: `LFO`
@@ -52,6 +52,7 @@ This is the table approach. Use when you want each step of the phrase to have an
 	- Row 02: cutoff = 80
 	- Row 03: cutoff = 50
 - [ ] Set `TABLE TIC` in Instrument View to control table speed. Default `01` = 1 tick per step.
+	- A phrase row is **6 ticks**, so `TIC 01` advances the table six times per row — much faster than it looks. `TIC 06` gives one table row per phrase row. See [Timing Reference](../reference/timing.md).
 - [ ] Compare: the slot LFO is smooth and continuous, the table is stepped and locked to your tic rate. **Use whichever fits the sound.**
 
 ### Tip

@@ -20,11 +20,11 @@ Mixing is shaping how sounds relate to each other along five axes. Different pro
 
 | Dimension | Problem it solves | Tools on M8 |
 |---|---|---|
-| **Frequency** | Two elements fighting in the same range; mud; harshness | Per-instrument EQ (p.32), main mix EQ |
+| **Frequency** | Two elements fighting in the same range; mud; harshness | Per-instrument EQ (manual p.32), main mix EQ |
 | **Level** | One element too loud or too quiet | Track volume in Mixer View, instrument volume |
 | **Space** | Mix sounds narrow, flat, or cluttered in the middle | Stereo width on ModFX/Delay/Reverb, instrument pan |
 | **Depth** | Mix sounds 2D, no foreground/background | Reverb send levels, delay send levels |
-| **Dynamics** | Kick gets buried by bass; mix feels static or pumpy | TRIG envelope side-chain (p.21), OTT (p.30), per-instrument modulation |
+| **Dynamics** | Kick gets buried by bass; mix feels static or pumpy | TRIG envelope side-chain (manual p.21), OTT (manual p.30), per-instrument modulation |
 
 **Diagnostic question when something sounds wrong:** which dimension is the problem? Most mix problems are misdiagnosed as level problems when they're actually frequency or dynamics problems.
 
@@ -47,7 +47,7 @@ If you go out of order, you mix everything to the lead, then can't hear the kick
 
 ## Scope A: On-device M8 mixing
 
-Manual references: Mixer View (p.30), EQ Editor View (p.32), Effect Settings View (p.36), Instrument Modulation View (p.18), Trig Envelope (p.21).
+Manual references: Mixer View (manual p.30), EQ Editor View (manual p.32), Effect Settings View (manual p.36), Instrument Modulation View (manual p.18), Trig Envelope (manual p.21).
 
 ### Tool 1: Track volume (Mixer View)
 
@@ -182,7 +182,7 @@ For when you want per-stem control the M8's 8 tracks can't give you. Used in Wee
 
 M8 renders stems natively — one pass, one file per track. No muting, no re-rendering eight times.
 
-Manual: Render View (p.47), Selection to Sample (p.48).
+Manual: Render View (manual p.47), Selection to Sample (manual p.48).
 
 - [ ] Project View → `RENDER` to open Render View.
 - [ ] Set the bottom switch to `STEMS` (the other option, `MIXED`, gives you one stereo file of the whole song).
@@ -195,7 +195,7 @@ Manual: Render View (p.47), Selection to Sample (p.48).
 
 `STEMS` writes a file for each *enabled* track that actually has chains in the selected range — silent tracks are skipped, so expect up to 8 files, not always exactly 8.
 
-**Caveat:** External Instrument tracks can't be rendered this way — the audio is processed in real time. Capture those with the Sample Editor instead, selecting the playing track as input source (p.62).
+**Caveat:** External Instrument tracks can't be rendered this way — the audio is processed in real time. Capture those with the Sample Editor instead, selecting the playing track as input source (manual p.62).
 
 ### Minimal Ableton mix
 

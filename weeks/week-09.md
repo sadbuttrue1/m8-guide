@@ -67,7 +67,7 @@ Same as Week 6 — Project 2 gets a release-grade file off the M8 too, no DAW in
 
 - [ ] Limiter & Mix Scope View → `PEAK`, clear with `[OPT]+[EDIT]`.
 - [ ] Play the loudest section. Read `PEAK`. **Target around `-1.0 dB`.**
-- [ ] Too hot? Pull `MIX` down, not `LIM` — `MIX` sits *after* the limiter (p.34).
+- [ ] Too hot? Pull `MIX` down, not `LIM` — `MIX` sits *after* the limiter (manual p.34).
 - [ ] Re-render `MIXED`, `LIMITER` **on**, `MODE` `32`-bit. That file is uploadable as-is; re-render at `16` only if a distributor rejects it.
 
 ### Step 4: Ship it (15 min)

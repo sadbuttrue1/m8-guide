@@ -2,7 +2,7 @@
 
 **Goal:** Remove cold-start friction. Rebuild muscle memory. No new techniques — prove the device still works for you.
 **Mindset:** Deliberately low bar. Success = boot it, use it, render something.
-**Manual references:** Getting Started (p.5), Navigation (p.6), Global Key Shortcuts (p.7), Loading a Demo Song (p.9), Song View (p.10), Chain View (p.12), Phrase View (p.14), Mixer View (p.31), Render View (p.47).
+**Manual references:** Getting Started (manual p.5), Navigation (manual p.6), Global Key Shortcuts (manual p.7), Loading a Demo Song (manual p.9), Song View (manual p.10), Chain View (manual p.12), Phrase View (manual p.14), Mixer View (manual p.31), Render View (manual p.47).
 
 ---
 
@@ -11,6 +11,7 @@
 ### Boot and recall
 
 - [ ] Charge M8 if battery low. Boot with power button (right side, 1 sec hold). Reference: Powering Up, p.3.
+	- If it won't boot, a sample won't load, or the card misbehaves, the fix is almost certainly in the [Troubleshooting Reference](../reference/troubleshooting.md). Don't lose the session to it.
 - [ ] In Song View: `Project View` is above Song View — navigate `[SHIFT]+[UP]` from Song View, choose `LOAD`, `[EDIT]` to enter file browser. Reference: Loading a Demo Song, p.9.
 - [ ] Load one of your previously finished tracks (or a demo if starting fresh).
 - [ ] Press `[SHIFT]+[PLAY]` to play the whole song. Listen all the way through.
@@ -40,7 +41,7 @@
 - [ ] Open an empty instrument slot, set `TYPE` to `Wavsynth` (Wavsynth view, manual p.50).
 - [ ] In Wavsynth, the `SHAPE` parameter cycles through wave types. Reference: Wavsynth Wave Table Index, p.82.
 - [ ] Listen to each in isolation. Set envelope to default (Instrument Modulation View → MOD1 = `AHD ENVELOPE` with default values).
-- [ ] Enable `NOTE PREVIEW` in System Settings (p.40), then audition each shape in **Phrase view** (p.14): drop the instrument in a step and move the note with `[EDIT]+[LEFT/RIGHT]` (semitone) or `[EDIT]+[UP/DOWN]` (octave). `[EDIT]+[PLAY]` from the Instrument view also works but only previews at a fixed low pitch.
+- [ ] Enable `NOTE PREVIEW` in System Settings (manual p.40), then audition each shape in **Phrase view** (manual p.14): drop the instrument in a step and move the note with `[EDIT]+[LEFT/RIGHT]` (semitone) or `[EDIT]+[UP/DOWN]` (octave). `[EDIT]+[PLAY]` from the Instrument view also works but only previews at a fixed low pitch.
 - [ ] Mental notes (no need to write):
 	- **Sine** — pure, sub-frequency, no harmonics
 	- **Sawtooth** — bright, all harmonics, classic synth bass/lead
@@ -64,7 +65,7 @@
 
 Arrangement on the M8 happens in **Song View** — it stacks one chain per track down the rows, and each track's playhead runs through its chains independently (manual p.10). A chain is a sequence of up to 16 phrases (manual p.12). You'll turn your 4-bar loop into a short arrangement with real dynamics.
 
-- [ ] **Get your loop into a chain per track.** In each track's Song column, place a chain that plays your 4-bar loop (the phrases you wrote this week). Keep every chain the same length so the tracks stay aligned — the manual recommends this explicitly (p.10).
+- [ ] **Get your loop into a chain per track.** In each track's Song column, place a chain that plays your 4-bar loop (the phrases you wrote this week). Keep every chain the same length so the tracks stay aligned — the manual recommends this explicitly (manual p.10).
 - [ ] **Stack Song rows into ~32 bars with an arc.** Add rows in Song View until the song runs ~32 bars (e.g. eight rows of your 4-bar chain). Shape a simple arc by what's present each row: intro (drums only) → add bass → add melody → full → strip back.
 - [ ] **Drop tracks out with empty-phrase chains — not mutes.** To silence a track for a section while keeping it locked to the others, put a chain of *empty* phrases in that track's cell for those rows. By convention this is chain `00` or `FE` (manual p.10); empty/no-note chains show grayed-out in Song View. This bakes the dynamics into the arrangement, so they survive a save and render correctly.
 	- *Why not the mute button? Live mute/solo (`[OPTION]+[SHIFT]` / `[OPTION]+[PLAY]`, Mixer View, manual p.31) is a real-time performance control — it isn't stored in the song structure, so it's the wrong tool for composing sections. Use it to audition, not to arrange.*

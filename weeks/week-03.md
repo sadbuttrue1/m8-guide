@@ -2,7 +2,7 @@
 
 **Goal:** Two more techniques in your toolbox: pitch slides via the `PSL` command (plus instant pitch jumps via `PIT`), and velocity-driven modulation via the **Tracking** modulation type.
 
-**Manual references:** Scale View (mentions `PIT`, p.28), Tracking modulation type (p.21), Sequencer FX Commands (`PSL`, p.71), Instrument FX Commands (`PIT`, p.75), Effect Command Help View (p.48).
+**Manual references:** Scale View (mentions `PIT`, p.28), Tracking modulation type (manual p.21), Sequencer FX Commands (`PSL`, p.71), Instrument FX Commands (`PIT`, p.75), Effect Command Help View (manual p.48).
 
 ---
 

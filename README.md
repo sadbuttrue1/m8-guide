@@ -66,6 +66,30 @@ Mirror of the [Notion source](https://www.notion.so/Learning-M8-3656d3b8eb1381d6
 - [Firmware Reference](reference/firmware.md) — firmware 6.6.0/6.6.1 changes relevant to the plan
 - [Troubleshooting Reference](reference/troubleshooting.md) — device-level failures and their official fixes
 
+## Publishing a release
+
+Readers get the PDFs from a [GitHub Release](../../releases), not from the repo. Cutting one is a tag:
+
+```bash
+git tag 2026.08.22
+git push origin 2026.08.22
+```
+
+`.github/workflows/release.yml` then builds every language and attaches the PDFs to a release for that tag. It runs on tags only — pushes and pull requests don't build anything, because the PDF is a deliverable rather than a check.
+
+**Version scheme: dates.** This is a living document, not software, so `YYYY.MM.DD` reads the way people actually think about it. Don't tag by firmware version — the plan changes without the firmware changing, and the scheme breaks the first time it does. Firmware coverage belongs on the cover and in the [Firmware Reference](reference/firmware.md).
+
+**Languages are discovered, not listed.** The workflow asks `build_pdf.py --list-languages`, which returns every directory holding a `strings.json`. Adding a translation adds an asset to the next release with no workflow change.
+
+**Stable links to share.** These always resolve to the newest release, so a link pinned in a Telegram channel never goes stale:
+
+```
+https://github.com/sadbuttrue1/m8-guide/releases/latest/download/M8_Learning_Plan.pdf
+https://github.com/sadbuttrue1/m8-guide/releases/latest/download/M8_Learning_Plan_RU.pdf
+```
+
+In practice, post the file itself for the in-app preview *and* pin the link for currency. Anyone who arrives later gets the current version without you reposting.
+
 ## How to use this with Claude Code
 
 Open this folder in Claude Code. Claude will read `CLAUDE.md` automatically and learn the conventions. Then:
@@ -93,7 +117,11 @@ The PDF is what you share with the M8 community on Telegram/Discord. To regenera
 python3 build_pdf.py
 ```
 
-Outputs `M8_Learning_Plan.pdf` in the same directory.
+Outputs `M8_Learning_Plan.pdf` in the same directory. PDFs are build artifacts and are never committed — see [Publishing a release](#publishing-a-release) for how readers get them.
+
+Every page footer carries a version. Local builds stamp `git describe`, so a
+copy you built yourself is identifiable as one (`df3b7e9-dirty`); release
+builds stamp the tag.
 
 Every language keeps its own `front-matter.md`, `about.md` and `strings.json`
 next to its markdown, so `build_pdf.py` contains no prose and no table of

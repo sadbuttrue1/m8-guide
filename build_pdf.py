@@ -27,6 +27,7 @@ Usage:
 import argparse
 import json
 import re
+import subprocess
 import unicodedata
 from importlib import metadata
 from pathlib import Path
@@ -244,6 +245,23 @@ def callout_box(title, body_text, bg=CALLOUT_BG):
         ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
     ]))
     return t
+
+
+def detect_version():
+    """Fall back to the git description when no version label is passed.
+
+    Release builds pass --version-label explicitly; this keeps local builds
+    honest about being local (a "-dirty" suffix, or a bare commit hash).
+    """
+    try:
+        result = subprocess.run(
+            ["git", "describe", "--tags", "--always", "--dirty"],
+            cwd=Path(__file__).resolve().parent,
+            capture_output=True, text=True, timeout=5,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return ""
+    return result.stdout.strip() if result.returncode == 0 else ""
 
 
 def make_on_page(footer):
@@ -791,19 +809,40 @@ def main():
     parser.add_argument("output", nargs="?", help="Output PDF path (optional).")
     parser.add_argument("--lang", choices=available_languages(), default="en",
                         help="Source language (default: en).")
+    parser.add_argument("--out-dir", help="Write to this directory using the "
+                                          "filename from strings.json.")
+    parser.add_argument("--version-label", help="Version stamped into the page "
+                                                "footer (default: git describe).")
+    parser.add_argument("--list-languages", action="store_true",
+                        help="Print the available languages and exit.")
     args = parser.parse_args()
+
+    if args.list_languages:
+        print("\n".join(available_languages()))
+        return
 
     here = Path(__file__).resolve().parent
     source_dir, strings = load_language(args.lang)
     configure_fonts()
 
-    output_path = Path(args.output) if args.output else source_dir / strings["output"]
+    if args.output:
+        output_path = Path(args.output)
+    elif args.out_dir:
+        output_path = Path(args.out_dir) / strings["output"]
+    else:
+        output_path = source_dir / strings["output"]
     if not output_path.is_absolute():
         output_path = here / output_path
     output_path.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = output_path.with_suffix(".tmp.pdf")
 
+    # The version rides in the footer so a forwarded copy can be identified.
+    # Keeping it inside the footer string (rather than drawn separately) means
+    # the extracted-text layout page_body() relies on stays a single line.
     footer = strings["footer"]
+    version = args.version_label if args.version_label is not None else detect_version()
+    if version:
+        footer = f"{footer} · {version}"
     footer_marker = footer.split("·")[-1].strip()
     page_callback = make_on_page(footer)
     titles = section_titles(source_dir, strings)

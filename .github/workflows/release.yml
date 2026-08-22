@@ -1,0 +1,46 @@
+name: Release PDFs
+
+# Release tags only. Building on every push or PR would generate artifacts
+# nobody asked for; the PDF is a release deliverable, not a check.
+on:
+  push:
+    tags:
+      - '[0-9]*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # Languages come from the repo, not from this file: build_pdf.py lists
+      # every directory that has a strings.json. Adding a translation needs no
+      # change here.
+      - name: Build every language
+        run: |
+          set -euo pipefail
+          for lang in $(python3 build_pdf.py --list-languages); do
+            python3 build_pdf.py \
+              --lang "$lang" \
+              --version-label "$GITHUB_REF_NAME" \
+              --out-dir dist
+          done
+          ls -la dist
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.pdf \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes

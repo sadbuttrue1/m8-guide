@@ -7,7 +7,7 @@
 >
 > Sharing it here in case it helps anyone else stuck in the same loop. It's generalized — no personal references — but the structure and the specific corrections are real. Take what's useful, ignore the rest.
 
-**What this plan covers:** M8 technique, synthesis fundamentals, arrangement, on-device mixing, on-device finalization, optional Ableton post-production. Verified against M8 firmware 6.5.2.
+**What this plan covers:** M8 technique, synthesis fundamentals, arrangement, on-device mixing, on-device finalization, optional Ableton post-production. Written against the M8 Operation Manual v6.5.2, with the firmware 6.6.0/6.6.1 changes that affect the plan covered in the Firmware Reference.
 
 **Time commitment:** 2–3 focused sessions per week, ~60 min each. ~20 hours total over Weeks 1–9. Optional Week 10 adds ~3 hours.
 

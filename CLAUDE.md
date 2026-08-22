@@ -182,7 +182,7 @@ Page-ID mapping (markdown file → Notion page) lives in `notion-page-ids.txt`:
 
 Use targeted updates (`notion-update-page` with search-and-replace style content edits) for small changes. Reserve full-page replacement for structural rewrites. Don't run a blanket reconciliation in either direction to make the two identical — voice differences are intentional. Never copy Notion's personal phrasing back into the markdown (it feeds the shared PDF); only pull genuine structural/factual fixes that direction.
 
-The PDF (`build_pdf.py` → `M8_Learning_Plan.pdf`) is a separate concern — only regenerate when the user asks or when the change is structural enough to warrant a refreshed share artifact.
+The PDF (`build_pdf.py` → `M8_Learning_Plan.pdf`) is a separate concern — only regenerate when the user asks or when the change is structural enough to warrant a refreshed share artifact. **Never commit a PDF.** Readers get them from GitHub Releases, cut by pushing a date tag (`YYYY.MM.DD`); see README → Publishing a release.
 
 ## Generating the PDF
 

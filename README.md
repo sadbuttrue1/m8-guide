@@ -25,7 +25,12 @@ Mirror of the [Notion source](https://www.notion.so/Learning-M8-3656d3b8eb1381d6
 ├── reference/
 │   ├── mixing.md                      # Mixing Reference
 │   ├── finalization.md                # Finalization Reference
-│   └── generative.md                  # Generative Toolkit Reference
+│   ├── generative.md                  # Generative Toolkit Reference
+│   ├── timing.md                      # Timing Reference
+│   ├── firmware.md                    # Firmware Reference
+│   └── troubleshooting.md             # Troubleshooting Reference
+├── translations/
+│   └── ru/                            # complete Russian edition
 ├── build_pdf.py                       # generate the shareable PDF from markdown
 └── notion-page-ids.txt                # Notion page IDs for sync
 ```
@@ -63,7 +68,8 @@ Mirror of the [Notion source](https://www.notion.so/Learning-M8-3656d3b8eb1381d6
 Open this folder in Claude Code. Claude will read `CLAUDE.md` automatically and learn the conventions. Then:
 
 - **To edit a week:** `edit weeks/week-N.md` or ask Claude to make changes
-- **To regenerate the PDF:** `python3 build_pdf.py` (requires reportlab: `pip install reportlab`)
+- **To regenerate the PDF:** install `requirements.txt`, then run `python3 build_pdf.py`
+- **To build the Russian PDF:** `python3 build_pdf.py --lang ru`
 - **To find a specific topic across all weeks:** `grep -r "PIT" weeks/` or ask Claude
 
 ## Notion sync philosophy
@@ -85,6 +91,16 @@ python3 build_pdf.py
 ```
 
 Outputs `M8_Learning_Plan.pdf` in the same directory.
+
+The complete [Russian edition](translations/ru/README.md) mirrors all 17 source
+Markdown files. Build it with:
+
+```bash
+python3 build_pdf.py --lang ru
+```
+
+This writes `translations/ru/M8_Learning_Plan_RU.pdf`. Generated PDFs are ignored
+by Git and are not stored in the repository.
 
 ## Credit
 

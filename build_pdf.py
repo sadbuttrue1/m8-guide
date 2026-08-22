@@ -1,28 +1,33 @@
 """
 M8 Learning Plan — PDF builder.
 
-Reads the markdown files in this directory and renders them into a single
-professional PDF suitable for sharing in the M8 community.
+Renders a source directory of Markdown into a single shareable PDF.
 
-Reading order:
-  1. Title page (hardcoded — note from the producer)
-  2. Table of contents (auto-computed page numbers)
-  3. overview.md
-  4. weeks/week-01.md through weeks/week-10.md
-  5. reference/mixing.md, finalization.md, generative.md,
-     timing.md, firmware.md, troubleshooting.md
-  6. About this document (closing page)
+This script holds no prose and no per-language content. Everything a language
+needs lives beside its Markdown in the source directory:
+
+  front-matter.md   cover page: title, subtitle, note callout, summary lines
+  strings.json      UI chrome: footer, "Contents", TOC group labels, output name
+  overview.md       ) the plan itself, in the order given by SECTIONS below
+  weeks/*.md        )
+  reference/*.md    )
+  about.md          closing page
+
+Section titles in the table of contents are read from each file's own `#`
+heading, so the TOC cannot drift out of sync with the pages it indexes.
+
+Adding a language means adding translations/<lang>/ with those files. No code
+change is required.
 
 Usage:
-  python3 build_pdf.py [output_filename.pdf]
-  python3 build_pdf.py --lang ru [output_filename.pdf]
-
-English is the default. Russian output is written to
-translations/ru/M8_Learning_Plan_RU.pdf unless an output path is supplied.
+  python3 build_pdf.py [output.pdf]
+  python3 build_pdf.py --lang ru [output.pdf]
 """
 
 import argparse
+import json
 import re
+import unicodedata
 from importlib import metadata
 from pathlib import Path
 
@@ -47,178 +52,52 @@ CODE_BG = HexColor("#f4f4f4")
 CALLOUT_BG = HexColor("#fff8e1")
 SECTION_BG = HexColor("#f0f4f8")
 
-LANG_CONFIG = {
-    "en": {
-        "source_dir": ".",
-        "default_output": "M8_Learning_Plan.pdf",
-        "title": "M8 Learning Plan",
-        "subtitle": "A 9-week structured plan for M8 producers<br/>who want to ship tracks again.",
-        "note_title": "A note before you read",
-        "note_body": (
-            "I built this for myself with Claude (Anthropic) after realizing I had a "
-            "drawer full of trackers, grooveboxes and samplers but no recent finished "
-            "tracks. The diagnosis was simple: I kept buying new gear to spark ideas "
-            "instead of going deeper into the tools that already worked for me. M8 was "
-            "the one that produced finished work in the past, so I built a plan to "
-            "rebuild fluency, close my real gaps (instrument tables, sound design, "
-            "arrangement, mixing, mastering), and ship tracks again.<br/><br/>"
-            "Sharing it here in case it helps anyone else stuck in the same loop. "
-            "It's generalized — no personal references — but the structure and the "
-            "specific corrections are real. Take what's useful, ignore the rest."
-        ),
-        "coverage": (
-            "<b>What this plan covers:</b> M8 technique, synthesis fundamentals, "
-            "arrangement, on-device mixing, on-device finalization, optional Ableton "
-            "post-production. Verified against M8 firmware 6.5.2."
-        ),
-        "time": (
-            "<b>Time commitment:</b> 2–3 focused sessions per week, ~60 min each. "
-            "~20 hours total over Weeks 1–9. Optional Week 10 adds ~3 hours."
-        ),
-        "outcome": (
-            "<b>Outcome:</b> Two shipped tracks in ~9 weeks. After that, ~4–5 weeks "
-            "per release-ready track sustainably."
-        ),
-        "contents": "Contents",
-        "overview_heading": "# M8 Learning Plan — Overview",
-        "overview_pdf_heading": "# Overview & operating principles",
-        "resources_title": "Resources",
-        "footer": "M8 Learning Plan · Built collaboratively with Claude (Anthropic) · Free to share",
-        "footer_marker": "Free to share",
-        "closing_title": "About this document",
-        "closing_paragraphs": [
-            (
-                "This plan was built collaboratively between a producer and Claude "
-                "(Anthropic) over an extended conversation. The producer brought the gear "
-                "history, the personal weaknesses, the priorities, and the corrections. "
-                "Claude pulled references from the M8 manual (firmware 6.5.2) and the "
-                "<b>awesome-m8</b> community list, structured the "
-                "plan into phases and weeks, and helped enforce time-boxes and "
-                "anti-perfectionism rules."
-            ),
-            (
-                "It's been generalized for sharing. The structure is real; the framing is "
-                "real; the anti-perfectionism rules are real. The personal details have "
-                "been removed."
-            ),
-            (
-                "<b>License:</b> free to share, adapt, remix. If it helps you finish "
-                "tracks, that's the point."
-            ),
-            (
-                "<b>Credit:</b> Created by Danielyan "
-                "(<a href=\"https://t.me/sadbuttrue1\">t.me/sadbuttrue1</a>), built "
-                "collaboratively with Claude (Anthropic). M8 by Dirtywave (Timothy Lamb)."
-            ),
-        ],
-        "closing_note": (
-            "<i>If you build a track using this plan, consider sharing it back to the "
-            "M8 community. The point isn't the plan, it's finished music.</i>"
-        ),
-        "author": "Danielyan (t.me/sadbuttrue1)",
-    },
-    "ru": {
-        "source_dir": "translations/ru",
-        "default_output": "translations/ru/M8_Learning_Plan_RU.pdf",
-        "title": "Учебный план M8",
-        "subtitle": "Структурированный план на 9 недель для музыкантов с M8,<br/>которые хотят снова выпускать законченные треки.",
-        "note_title": "Перед началом",
-        "note_body": (
-            "Этот план появился после простого наблюдения: устройств становилось больше, "
-            "а законченных треков — нет. Вместо очередной покупки автор вернулся к M8 — "
-            "инструменту, на котором уже удавалось доводить музыку до результата, — и "
-            "составил последовательную программу восстановления навыков, закрытия "
-            "пробелов и регулярного выпуска треков.<br/><br/>"
-            "Версия обобщена для сообщества: личные подробности убраны, но структура, "
-            "ограничения по времени и практические исправления сохранены. Используй то, "
-            "что помогает, и пропускай остальное."
-        ),
-        "coverage": (
-            "<b>Что входит:</b> техника M8, основы синтеза, аранжировка, сведение и "
-            "финализация на устройстве, а также необязательная постобработка в Ableton. "
-            "Материал сверён с руководством M8 v6.5.2 и изменениями прошивок 6.6.0/6.6.1."
-        ),
-        "time": (
-            "<b>Время:</b> 2–3 сосредоточенных занятия в неделю примерно по 60 минут. "
-            "Около 20 часов за недели 1–9; необязательная неделя 10 добавляет около 3 часов."
-        ),
-        "outcome": (
-            "<b>Результат:</b> два опубликованных трека примерно за 9 недель, затем "
-            "устойчивый темп — один готовый к выпуску трек каждые 4–5 недель."
-        ),
-        "contents": "Содержание",
-        "overview_heading": "# Учебный план M8 — обзор",
-        "overview_pdf_heading": "# Обзор и принципы работы",
-        "resources_title": "Ресурсы",
-        "footer": "Учебный план M8 · Создан совместно с Claude (Anthropic) · Можно свободно делиться",
-        "footer_marker": "Можно свободно делиться",
-        "closing_title": "Об этом документе",
-        "closing_paragraphs": [
-            (
-                "Этот план был создан в продолжительном совместном диалоге музыканта и "
-                "Claude (Anthropic). Автор определил историю работы с оборудованием, "
-                "реальные пробелы, приоритеты и исправления. Claude помог сверить ссылки "
-                "с руководством M8 и материалами сообщества, разбить программу на этапы "
-                "и закрепить ограничения по времени и правила против перфекционизма."
-            ),
-            (
-                "Русская редакция повторяет структуру актуального англоязычного Markdown "
-                "один к одному и включает относящиеся к плану изменения прошивок 6.6.0/6.6.1."
-            ),
-            (
-                "<b>Лицензия:</b> документ можно свободно распространять, адаптировать "
-                "и перерабатывать. Его задача — помогать заканчивать музыку."
-            ),
-            (
-                "<b>Автор оригинала:</b> Danielyan "
-                "(<a href=\"https://t.me/sadbuttrue1\">t.me/sadbuttrue1</a>). "
-                "Русская редакция подготовлена участниками сообщества M8. "
-                "M8 создан Dirtywave (Timothy Lamb)."
-            ),
-        ],
-        "closing_note": (
-            "<i>Если с помощью этого плана получится закончить трек, поделись им с "
-            "сообществом M8. Главное здесь не план, а законченная музыка.</i>"
-        ),
-        "author": "Danielyan; Russian edition by the M8 community",
-    },
-}
-
-TOC_ITEMS = {
-    "en": [
-        ("Overview & operating principles", "overview"), ("    Resources", "resources"),
-        ("Phase 1 — Learn (Weeks 1–4)", None), ("    Week 1 — Re-entry", "week-01"),
-        ("    Week 2 — LFO to filter + envelopes", "week-02"), ("    Week 3 — Pitch slides, Tracking, filters", "week-03"),
-        ("    Week 4 — Retriggers, arpeggios, LFO concept", "week-04"), ("Phase 2 — Apply (Weeks 5–7)", None),
-        ("    Week 5 — Mix Project 1", "week-05"), ("    Week 6 — Finalize and ship Project 1", "week-06"),
-        ("    Week 7 — Starter instrument library", "week-07"), ("Phase 3 — Polish (Weeks 8–9)", None),
-        ("    Week 8 — Build Project 2", "week-08"), ("    Week 9 — Finalize and ship Project 2", "week-09"),
-        ("Optional", None), ("    Week 10 — Scope B mix + master in Ableton", "week-10"),
-        ("References", None), ("    Mixing Reference", "ref-mixing"),
-        ("    Finalization Reference", "ref-finalization"), ("    Generative Toolkit Reference", "ref-generative"),
-        ("    Timing Reference", "ref-timing"), ("    Firmware Reference", "ref-firmware"),
-        ("    Troubleshooting Reference", "ref-troubleshooting"),
-    ],
-    "ru": [
-        ("Обзор и принципы работы", "overview"), ("    Ресурсы", "resources"),
-        ("Этап 1 — обучение (недели 1–4)", None), ("    Неделя 1 — возвращение к M8", "week-01"),
-        ("    Неделя 2 — LFO, модуляция и таблицы", "week-02"), ("    Неделя 3 — pitch slide, velocity и Tracking", "week-03"),
-        ("    Неделя 4 — retrigger, arpeggio и LFO", "week-04"), ("Этап 2 — применение (недели 5–7)", None),
-        ("    Неделя 5 — сведение Проекта 1", "week-05"), ("    Неделя 6 — финализация и публикация Проекта 1", "week-06"),
-        ("    Неделя 7 — библиотека инструментов", "week-07"), ("Этап 3 — полировка (недели 8–9)", None),
-        ("    Неделя 8 — создание Проекта 2", "week-08"), ("    Неделя 9 — финализация и публикация Проекта 2", "week-09"),
-        ("Необязательно", None), ("    Неделя 10 — Scope B в Ableton", "week-10"),
-        ("Справочники", None), ("    Сведение", "ref-mixing"), ("    Финализация", "ref-finalization"),
-        ("    Генеративные приёмы", "ref-generative"), ("    Тайминг", "ref-timing"),
-        ("    Прошивки", "ref-firmware"), ("    Диагностика", "ref-troubleshooting"),
-    ],
-}
+# ---------- Document structure ----------
+# (key, path) renders a file; ("@name", None) is a TOC group label looked up in
+# strings.json under "groups". Titles come from each file's own "#" heading.
+SECTIONS = [
+    ("overview", "overview.md"),
+    ("@phase1", None),
+    ("week-01", "weeks/week-01.md"),
+    ("week-02", "weeks/week-02.md"),
+    ("week-03", "weeks/week-03.md"),
+    ("week-04", "weeks/week-04.md"),
+    ("@phase2", None),
+    ("week-05", "weeks/week-05.md"),
+    ("week-06", "weeks/week-06.md"),
+    ("week-07", "weeks/week-07.md"),
+    ("@phase3", None),
+    ("week-08", "weeks/week-08.md"),
+    ("week-09", "weeks/week-09.md"),
+    ("@optional", None),
+    ("week-10", "weeks/week-10.md"),
+    ("@references", None),
+    ("ref-mixing", "reference/mixing.md"),
+    ("ref-finalization", "reference/finalization.md"),
+    ("ref-generative", "reference/generative.md"),
+    ("ref-timing", "reference/timing.md"),
+    ("ref-firmware", "reference/firmware.md"),
+    ("ref-troubleshooting", "reference/troubleshooting.md"),
+]
 
 FONT_REGULAR = "Helvetica"
 FONT_BOLD = "Helvetica-Bold"
 FONT_ITALIC = "Helvetica-Oblique"
 FONT_BOLD_ITALIC = "Helvetica-BoldOblique"
 FONT_MONO = "Courier"
+
+# Glyphs the prose fonts don't carry. Rather than rewriting the author's text,
+# borrow the glyph from a base-14 font that does have it.
+GLYPH_FALLBACK = {
+    "\u2192": ("Symbol", "&#8594;"),        # right arrow
+    "\u25a2": ("ZapfDingbats", "&#10065;"),  # empty checkbox
+    "\u25a3": ("ZapfDingbats", "&#10063;"),  # ticked checkbox
+}
+
+# No font in the stack has emoji; drop them rather than emit .notdef boxes.
+EMOJI_RE = re.compile(
+    "[\U0001F300-\U0001FAFF\u2600-\u27BF\uFE0F]"
+)
 
 # ---------- Styles ----------
 styles = getSampleStyleSheet()
@@ -275,37 +154,84 @@ caption = ParagraphStyle(
 
 
 # ---------- Helpers ----------
-def configure_fonts(lang):
-    """Register one portable font family with Latin and Cyrillic coverage."""
-    global FONT_REGULAR, FONT_BOLD, FONT_ITALIC, FONT_BOLD_ITALIC, FONT_MONO
+def _renderable_in_base14(text):
+    """True if the base-14 fonts can render this text.
+
+    They cover Latin-1 directly, and ReportLab substitutes from Symbol for the
+    stray maths glyph, so the question that actually matters is whether the
+    text uses *letters* from a script Helvetica doesn't have.
+    """
+    for char in text:
+        if not unicodedata.category(char).startswith("L"):
+            continue
+        try:
+            char.encode("cp1252")
+        except UnicodeEncodeError:
+            return False
+    return True
+
+
+def rendered_sources(source_dir):
+    """The files that actually end up in the PDF."""
+    paths = [source_dir / "front-matter.md", source_dir / "about.md"]
+    paths += [source_dir / rel for _, rel in SECTIONS if rel]
+    return paths
+
+
+def configure_fonts(source_dir):
+    """Embed a Unicode prose font only if the source actually needs one.
+
+    English stays on the base-14 fonts, so its PDF is unchanged by the
+    multi-language support. A source written in Cyrillic (or any other script
+    Helvetica lacks) gets Roboto for prose instead. Code spans keep the
+    monospace font either way -- see code_font().
+    """
+    global FONT_REGULAR, FONT_BOLD, FONT_ITALIC, FONT_BOLD_ITALIC
+
+    sources = rendered_sources(source_dir)
+    if all(_renderable_in_base14(f.read_text(encoding="utf-8")) for f in sources):
+        return
 
     distribution = metadata.distribution("font-roboto")
     font_dir = Path(distribution.locate_file("font_roboto/files"))
-    font_files = {
+    for name, filename in {
         "M8Sans": "Roboto-Regular.ttf",
         "M8Sans-Bold": "Roboto-Bold.ttf",
         "M8Sans-Italic": "Roboto-Italic.ttf",
         "M8Sans-BoldItalic": "Roboto-BoldItalic.ttf",
-    }
-    for name, filename in font_files.items():
+    }.items():
         pdfmetrics.registerFont(TTFont(name, str(font_dir.joinpath(filename))))
     pdfmetrics.registerFontFamily(
-        "M8Sans",
-        normal="M8Sans",
-        bold="M8Sans-Bold",
-        italic="M8Sans-Italic",
-        boldItalic="M8Sans-BoldItalic",
+        "M8Sans", normal="M8Sans", bold="M8Sans-Bold",
+        italic="M8Sans-Italic", boldItalic="M8Sans-BoldItalic",
     )
     FONT_REGULAR = "M8Sans"
     FONT_BOLD = "M8Sans-Bold"
     FONT_ITALIC = "M8Sans-Italic"
     FONT_BOLD_ITALIC = "M8Sans-BoldItalic"
-    FONT_MONO = "M8Sans-Bold"
 
-    for style in (subtitle_style, body, bullet, sub_bullet, task, sub_task, callout, caption):
+    for style in (subtitle_style, body, bullet, sub_bullet, task, sub_task,
+                  callout, caption):
         style.fontName = FONT_REGULAR
     for style in (title_style, h1, h2, h3):
         style.fontName = FONT_BOLD
+
+
+def code_font(code_text):
+    """Monospace for code, falling back to the prose font for scripts Courier
+    can't render (e.g. a Cyrillic word inside a keycap span)."""
+    return FONT_MONO if _renderable_in_base14(code_text) else FONT_BOLD
+
+
+def substitute_glyphs(text):
+    """Borrow glyphs the prose font lacks from a base-14 font that has them,
+    and drop emoji. The author's text is never rewritten into different
+    characters -- only wrapped so it renders."""
+    text = EMOJI_RE.sub("", text)
+    for glyph, (face, entity) in GLYPH_FALLBACK.items():
+        if glyph in text:
+            text = text.replace(glyph, f'<font face="{face}">{entity}</font>')
+    return text
 
 
 def callout_box(title, body_text, bg=CALLOUT_BG):
@@ -325,12 +251,12 @@ def callout_box(title, body_text, bg=CALLOUT_BG):
     return t
 
 
-def make_on_page(config):
+def make_on_page(footer):
     def on_page(canvas_obj, doc):
         canvas_obj.saveState()
         canvas_obj.setFont(FONT_REGULAR, 8)
         canvas_obj.setFillColor(MUTED)
-        canvas_obj.drawString(2 * cm, 1.2 * cm, config["footer"])
+        canvas_obj.drawString(2 * cm, 1.2 * cm, footer)
         canvas_obj.drawRightString(A4[0] - 2 * cm, 1.2 * cm, f"{doc.page}")
         canvas_obj.restoreState()
 
@@ -344,21 +270,6 @@ def md_inline_to_reportlab(text):
     Convert Markdown inline syntax (bold, italic, code, links) to ReportLab
     paragraph markup. ReportLab uses HTML-like tags inside Paragraph.
     """
-    # Keep the generated PDF portable: Roboto covers Latin/Cyrillic but not
-    # emoji or the right-arrow glyph used as prose punctuation in the sources.
-    text = (
-        text.replace("🎛️", "")
-        .replace("🎛", "")
-        .replace("🎯", "")
-        .replace(" → ", " -> ")
-        .replace("→", "->")
-        .replace(" — ", " - ")
-        .replace("—", "-")
-        .replace("–", "-")
-        .replace("‑", "-")
-        .replace("−", "-")
-    )
-
     # Escape ampersands first (but not entities)
     text = re.sub(r"&(?!\w+;)", "&amp;", text)
     # Escape angle brackets (but preserve them later for our tags)
@@ -371,7 +282,7 @@ def md_inline_to_reportlab(text):
     # Inline code: `text` → mono span with bg
     text = re.sub(
         r"`([^`]+)`",
-        lambda m: f'<font face="{FONT_MONO}" size="9.5">{m.group(1)}</font>',
+        lambda m: f'<font face="{code_font(m.group(1))}" size="9.5">{m.group(1)}</font>',
         text,
     )
     # Links: [text](url) → <link href="url" color="...">text</link>
@@ -392,7 +303,7 @@ def md_inline_to_reportlab(text):
         lambda m: f'<font face="{FONT_BOLD}" color="#006666">{m.group(0)}</font>',
         text,
     )
-    return text
+    return substitute_glyphs(text)
 
 
 # ---------- Markdown → flowables ----------
@@ -503,7 +414,7 @@ def render_list(tokens, start, flowables, depth=0):
                         is_task, checked, stripped = parse_task(content)
                         bullet_style, task_style = pick_styles(depth)
                         if is_task:
-                            mark = "[x]" if checked else "[ ]"
+                            mark = substitute_glyphs("▣" if checked else "▢")
                             flowables.append(Paragraph(
                                 f"{mark}&nbsp;&nbsp;{md_inline_to_reportlab(stripped)}",
                                 task_style
@@ -525,7 +436,7 @@ def render_list(tokens, start, flowables, depth=0):
                 is_task, checked, stripped = parse_task(content)
                 bullet_style, task_style = pick_styles(depth)
                 if is_task:
-                    mark = "[x]" if checked else "[ ]"
+                    mark = substitute_glyphs("▣" if checked else "▢")
                     flowables.append(Paragraph(
                         f"{mark}&nbsp;&nbsp;{md_inline_to_reportlab(stripped)}",
                         task_style
@@ -641,47 +552,128 @@ def render_table(tokens, start, flowables):
     return i + 1
 
 
+# ---------- Source loading ----------
+
+def load_language(lang):
+    """Resolve a language to its source directory and UI strings."""
+    here = Path(__file__).resolve().parent
+    source_dir = here if lang == "en" else here / "translations" / lang
+    strings_path = source_dir / "strings.json"
+    if not strings_path.is_file():
+        raise SystemExit(f"No strings.json in {source_dir} — is '{lang}' a translation?")
+    return source_dir, json.loads(strings_path.read_text(encoding="utf-8"))
+
+
+def available_languages():
+    here = Path(__file__).resolve().parent
+    langs = ["en"]
+    translations = here / "translations"
+    if translations.is_dir():
+        langs += sorted(
+            d.name for d in translations.iterdir()
+            if (d / "strings.json").is_file()
+        )
+    return langs
+
+
+def read_heading(path):
+    """The document title a file declares in its own leading '#' heading."""
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("# "):
+            return line[2:].strip()
+    raise SystemExit(f"{path} has no '# ' heading to use as its title.")
+
+
+def section_titles(source_dir, strings):
+    """key → title, derived from each file's own heading. The overview keeps a
+    dedicated PDF title because its Markdown heading names the whole plan."""
+    titles = {}
+    for key, rel_path in SECTIONS:
+        if rel_path is None:
+            continue
+        titles[key] = (
+            strings["overview_title"] if key == "overview"
+            else read_heading(source_dir / rel_path)
+        )
+    titles["resources"] = strings["resources_title"]
+    return titles
+
+
+def render_front_matter(source_dir):
+    """Render front-matter.md into the cover page.
+
+    Format (see any front-matter.md):
+      # title
+      ## subtitle line          (consecutive '##' lines join with a break)
+      > ### callout title       (a blockquote becomes the highlighted note box;
+      > callout body            blank '>' lines separate its paragraphs)
+      body paragraphs
+    """
+    lines = (source_dir / "front-matter.md").read_text(encoding="utf-8").splitlines()
+    title, subtitle, quote, paragraphs = "", [], [], []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("# "):
+            title = stripped[2:].strip()
+        elif stripped.startswith("## "):
+            subtitle.append(stripped[3:].strip())
+        elif stripped.startswith(">"):
+            quote.append(stripped[1:].strip())
+        elif stripped:
+            paragraphs.append(stripped)
+
+    note_title, note_parts, current = "", [], []
+    for line in quote:
+        if line.startswith("### "):
+            note_title = line[4:].strip()
+        elif line:
+            current.append(line)
+        elif current:
+            note_parts.append(" ".join(current))
+            current = []
+    if current:
+        note_parts.append(" ".join(current))
+
+    flowables = [Spacer(1, 4 * cm), Paragraph(md_inline_to_reportlab(title), title_style)]
+    if subtitle:
+        joined = "<br/>".join(md_inline_to_reportlab(s) for s in subtitle)
+        flowables.append(Paragraph(joined, subtitle_style))
+    flowables.append(Spacer(1, 1 * cm))
+    if note_parts:
+        flowables.append(callout_box(
+            md_inline_to_reportlab(note_title),
+            "<br/><br/>".join(md_inline_to_reportlab(x) for x in note_parts),
+            bg=SECTION_BG,
+        ))
+        flowables.append(Spacer(1, 1.5 * cm))
+    for paragraph in paragraphs:
+        flowables.append(Paragraph(md_inline_to_reportlab(paragraph), body))
+    flowables.append(PageBreak())
+    return flowables, title
+
+
 # ---------- Two-pass build (to compute real TOC page numbers) ----------
 
-def build_story(lang="en", toc_data=None):
+def build_story(source_dir, strings, toc_data=None):
     """
     Build the full story (list of flowables). If toc_data is None, use
     placeholder page numbers (this is pass 1, to discover real positions).
     If toc_data is provided, use those page numbers in the TOC.
     """
-    here = Path(__file__).resolve().parent
-    config = LANG_CONFIG[lang]
-    source_dir = here / config["source_dir"]
-    story = []
-
-    # --- Title page ---
-    story.append(Spacer(1, 4 * cm))
-    story.append(Paragraph(config["title"], title_style))
-    story.append(Paragraph(config["subtitle"], subtitle_style))
-    story.append(Spacer(1, 1 * cm))
-    story.append(callout_box(
-        config["note_title"],
-        config["note_body"],
-        bg=SECTION_BG,
-    ))
-    story.append(Spacer(1, 1.5 * cm))
-    story.append(Paragraph(
-        config["coverage"],
-        body
-    ))
-    story.append(Paragraph(
-        config["time"],
-        body
-    ))
-    story.append(Paragraph(
-        config["outcome"],
-        body
-    ))
-    story.append(PageBreak())
+    story, doc_title = render_front_matter(source_dir)
+    titles = section_titles(source_dir, strings)
 
     # --- Table of contents ---
-    story.append(Paragraph(config["contents"], h1))
-    toc_items = TOC_ITEMS[lang]
+    story.append(Paragraph(strings["contents"], h1))
+    toc_items = []
+    for key, rel_path in SECTIONS:
+        if key.startswith("@"):
+            toc_items.append((strings["groups"][key[1:]], None))
+            continue
+        toc_items.append((f"    {titles[key]}", key))
+        if key == "overview":
+            toc_items.append((f"    {titles['resources']}", "resources"))
+
     toc_rows = []
     for title, key in toc_items:
         page_num = ""
@@ -690,80 +682,58 @@ def build_story(lang="en", toc_data=None):
         is_section = key is None
         # Convert leading 4-space indent to &nbsp; so it renders
         display_title = title.replace("    ", "&nbsp;&nbsp;&nbsp;&nbsp;", 1)
+        display_title = md_inline_to_reportlab(display_title)
         if is_section:
             toc_rows.append([Paragraph(f"<b>{display_title}</b>", body), ""])
         else:
             toc_rows.append([
                 Paragraph(display_title, body),
-                Paragraph(page_num, body),
+                Paragraph(f"<font color='#666666'>{page_num}</font>", body),
             ])
-    toc_table = Table(toc_rows, colWidths=[14 * cm, 2 * cm])
+    toc_table = Table(toc_rows, colWidths=[14.5 * cm, 1.5 * cm])
     toc_table.setStyle(TableStyle([
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("ALIGN", (1, 0), (1, -1), "RIGHT"),
         ("LEFTPADDING", (0, 0), (-1, -1), 0),
         ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        ("TOPPADDING", (0, 0), (-1, -1), 3),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
-        ("ALIGN", (1, 0), (1, -1), "RIGHT"),
+        ("TOPPADDING", (0, 0), (-1, -1), 1),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
     ]))
     story.append(toc_table)
     story.append(PageBreak())
 
-    # --- Overview ---
-    section_anchors = {}  # key → flowable index
-    section_anchors["overview"] = len(story)
-    overview_md = (source_dir / "overview.md").read_text(encoding="utf-8")
-    # The overview file starts with "# M8 Learning Plan — Overview".
-    # We rewrite it to "Overview & operating principles" since that's what the
-    # TOC and traditional document structure expect.
-    overview_md = overview_md.replace(
-        config["overview_heading"],
-        config["overview_pdf_heading"],
-        1
-    )
-    story.extend(parse_markdown_to_flowables(overview_md))
-    # Note: "Resources" is part of overview.md, lives in the same file at "## Resources"
-    # The TOC entry for "Resources" maps to the same section - we'll mark it at
-    # the right point during rendering. For simplicity, point it to overview.
-    section_anchors["resources"] = section_anchors["overview"]
-
-    # --- Weeks ---
-    for i in range(1, 11):
-        story.append(PageBreak())
-        section_anchors[f"week-{i:02d}"] = len(story)
-        week_md = (source_dir / "weeks" / f"week-{i:02d}.md").read_text(encoding="utf-8")
-        story.extend(parse_markdown_to_flowables(week_md))
-
-    # --- References ---
-    for name, key in [
-        ("mixing", "ref-mixing"),
-        ("finalization", "ref-finalization"),
-        ("generative", "ref-generative"),
-        ("timing", "ref-timing"),
-        ("firmware", "ref-firmware"),
-        ("troubleshooting", "ref-troubleshooting"),
-    ]:
-        story.append(PageBreak())
+    # --- Body sections ---
+    section_anchors = {}
+    for index, (key, rel_path) in enumerate(SECTIONS):
+        if rel_path is None:
+            continue
+        if index:
+            story.append(PageBreak())
         section_anchors[key] = len(story)
-        ref_md = (source_dir / "reference" / f"{name}.md").read_text(encoding="utf-8")
-        story.extend(parse_markdown_to_flowables(ref_md))
+        md_text = (source_dir / rel_path).read_text(encoding="utf-8")
+        if key == "overview":
+            # The overview file's own heading names the whole plan; inside the
+            # PDF this section is the plan's opening chapter instead.
+            md_text = md_text.replace(
+                f"# {read_heading(source_dir / rel_path)}",
+                f"# {titles['overview']}",
+                1,
+            )
+            # Resources is an H2 inside the overview, not a file of its own.
+            section_anchors["resources"] = section_anchors[key]
+        story.extend(parse_markdown_to_flowables(md_text))
 
     # --- Closing page ---
     story.append(PageBreak())
     story.append(Spacer(1, 6 * cm))
-    story.append(Paragraph(config["closing_title"], h1))
-    for paragraph in config["closing_paragraphs"]:
-        story.append(Paragraph(paragraph, body))
-    story.append(Spacer(1, 1 * cm))
-    story.append(Paragraph(
-        config["closing_note"],
-        body
+    story.extend(parse_markdown_to_flowables(
+        (source_dir / "about.md").read_text(encoding="utf-8")
     ))
 
-    return story, section_anchors
+    return story, section_anchors, doc_title
 
 
-def get_page_for_flowable_index(doc_path, lang="en"):
+def resolve_section_pages(doc_path, titles, footer_marker):
     """
     Render the PDF once, then walk the rendered pages to find which page
     each section actually starts on. Uses pypdf to read back.
@@ -771,59 +741,52 @@ def get_page_for_flowable_index(doc_path, lang="en"):
     from pypdf import PdfReader
     reader = PdfReader(doc_path)
 
-    # Heuristic: scan the rendered PDF for each section's title text.
-    # We use a mapping from anchor key → expected title prefix.
-    title_maps = {
-        "en": {
-            "overview": "Overview & operating principles", "resources": "Resources",
-            "week-01": "Week 1 — Re-entry", "week-02": "Week 2 — LFO to filter",
-            "week-03": "Week 3 — Pitch slides", "week-04": "Week 4 — Retriggers",
-            "week-05": "Week 5 — Mix Project 1", "week-06": "Week 6 — Finalize and ship Project 1",
-            "week-07": "Week 7 — Starter instrument library", "week-08": "Week 8 — Build Project 2",
-            "week-09": "Week 9 — Finalize and ship Project 2", "week-10": "Week 10 — Scope B mix + master",
-            "ref-mixing": "Mixing Reference", "ref-finalization": "Finalization Reference",
-            "ref-generative": "Generative Toolkit Reference", "ref-timing": "Timing Reference",
-            "ref-firmware": "Firmware Reference", "ref-troubleshooting": "Troubleshooting Reference",
-        },
-        "ru": {
-            "overview": "Обзор и принципы работы", "resources": "Ресурсы",
-            "week-01": "Неделя 1 - возвращение к M8", "week-02": "Неделя 2 - LFO на фильтр",
-            "week-03": "Неделя 3 - pitch slide", "week-04": "Неделя 4 - retrigger",
-            "week-05": "Неделя 5 - сведение Проекта 1", "week-06": "Неделя 6 — финализация и публикация Проекта 1",
-            "week-07": "Неделя 7 - стартовая библиотека инструментов", "week-08": "Неделя 8 - создание Проекта 2",
-            "week-09": "Неделя 9 — финализация и публикация Проекта 2", "week-10": "Неделя 10 — сведение и мастеринг Scope B",
-            "ref-mixing": "Справочник по сведению", "ref-finalization": "Справочник по финализации",
-            "ref-generative": "Справочник по генеративным приёмам", "ref-timing": "Справочник по таймингу",
-            "ref-firmware": "Справочник по прошивкам", "ref-troubleshooting": "Справочник по диагностике",
-        },
-    }
-    title_map = title_maps[lang]
-    footer_marker = LANG_CONFIG[lang]["footer_marker"]
     result = {}
-    for key, title in title_map.items():
+    for key, title in titles.items():
+        if key == "resources":
+            continue
         for i, page in enumerate(reader.pages):
             if i < 2:
                 # Skip title page and TOC page
                 continue
-            text = page.extract_text()
-            # Strip the footer prefix to isolate page-body content.
-            # Footer looks like: "M8 Learning Plan · ... · Free to share\nNN\n<body>"
-            body_start = text.find(footer_marker)
-            if body_start == -1:
+            body_text = page_body(page, footer_marker)
+            if body_text is None:
                 continue
-            # Skip past "Free to share\n" + page number + "\n"
-            body = text[body_start + len(footer_marker):].lstrip()
-            # Skip the page-number line
-            if "\n" in body:
-                body = body.split("\n", 1)[1]
             # A long heading can wrap in the PDF and extract with an inserted
             # newline, so compare normalized whitespace rather than raw lines.
-            normalized_body = " ".join(body.split())
-            normalized_title = " ".join(title.split())
-            if normalized_body.startswith(normalized_title):
+            if " ".join(body_text.split()).startswith(" ".join(title.split())):
                 result[key] = i + 1
                 break
     return result
+
+
+def page_body(page, footer_marker):
+    """Strip the running footer and page number from an extracted page."""
+    text = page.extract_text()
+    start = text.find(footer_marker)
+    if start == -1:
+        return None
+    rest = text[start + len(footer_marker):].lstrip()
+    return rest.split("\n", 1)[1] if "\n" in rest else rest
+
+
+def find_resources_page(doc_path, titles, page_map, footer_marker):
+    """Resources is an H2 inside the overview, so locate it by scanning the
+    overview's pages for the heading."""
+    from pypdf import PdfReader
+    reader = PdfReader(doc_path)
+    first = page_map.get("overview", 3)
+    last = page_map.get("week-01", len(reader.pages) + 1)
+    needle = " ".join(titles["resources"].split())
+    for i, page in enumerate(reader.pages):
+        if i + 1 < first:
+            continue
+        if i + 1 >= last:
+            break
+        body_text = page_body(page, footer_marker)
+        if body_text and needle in " ".join(body_text.split()):
+            return i + 1
+    return first
 
 
 # ---------- Main ----------
@@ -831,68 +794,59 @@ def get_page_for_flowable_index(doc_path, lang="en"):
 def main():
     parser = argparse.ArgumentParser(description="Build the M8 Learning Plan PDF.")
     parser.add_argument("output", nargs="?", help="Output PDF path (optional).")
-    parser.add_argument("--lang", choices=sorted(LANG_CONFIG), default="en", help="Source language (default: en).")
+    parser.add_argument("--lang", choices=available_languages(), default="en",
+                        help="Source language (default: en).")
     args = parser.parse_args()
 
     here = Path(__file__).resolve().parent
-    config = LANG_CONFIG[args.lang]
-    configure_fonts(args.lang)
+    source_dir, strings = load_language(args.lang)
+    configure_fonts(source_dir)
 
-    output_path = Path(args.output) if args.output else Path(config["default_output"])
+    output_path = Path(args.output) if args.output else source_dir / strings["output"]
     if not output_path.is_absolute():
         output_path = here / output_path
     output_path.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = output_path.with_suffix(".tmp.pdf")
-    page_callback = make_on_page(config)
+
+    footer = strings["footer"]
+    footer_marker = footer.split("·")[-1].strip()
+    page_callback = make_on_page(footer)
+    titles = section_titles(source_dir, strings)
 
     # Pass 1: render without page numbers in TOC
-    story, _ = build_story(lang=args.lang, toc_data=None)
+    story, _, doc_title = build_story(source_dir, strings, toc_data=None)
     doc = SimpleDocTemplate(
         str(tmp_path),
         pagesize=A4,
         leftMargin=2 * cm, rightMargin=2 * cm,
         topMargin=2 * cm, bottomMargin=2 * cm,
-        title=config["title"],
-        author=config["author"],
+        title=doc_title,
+        author=strings["author"],
     )
     doc.build(story, onFirstPage=page_callback, onLaterPages=page_callback)
 
     # Discover real page numbers for headings
-    page_map = get_page_for_flowable_index(str(tmp_path), lang=args.lang)
+    page_map = resolve_section_pages(str(tmp_path), titles, footer_marker)
+    page_map["resources"] = find_resources_page(
+        str(tmp_path), titles, page_map, footer_marker
+    )
 
-    # Special case: Resources is a sub-section inside overview.md.
-    # Find the page where "Resources" appears as an H2 within the overview.
-    from pypdf import PdfReader
-    reader = PdfReader(str(tmp_path))
-    overview_page = page_map.get("overview", 3)
-    week_one_page = page_map.get("week-01", len(reader.pages) + 1)
-    resources_title = config["resources_title"]
-    for i, page in enumerate(reader.pages):
-        if i + 1 < overview_page:
-            continue
-        if i + 1 >= week_one_page:
-            break
-        text = page.extract_text()
-        # The resources H2 appears on its own line in extracted text.
-        # In extracted text, headings appear on their own line.
-        if f"\n{resources_title}\n" in text:
-            page_map["resources"] = i + 1
-            break
-
-    # Pass 2: render with real page numbers
-    tmp_path.unlink()
-    story, _ = build_story(lang=args.lang, toc_data=page_map)
+    # Pass 2: rebuild with the real page numbers in the TOC
+    story, _, doc_title = build_story(source_dir, strings, toc_data=page_map)
     doc = SimpleDocTemplate(
         str(output_path),
         pagesize=A4,
         leftMargin=2 * cm, rightMargin=2 * cm,
         topMargin=2 * cm, bottomMargin=2 * cm,
-        title=config["title"],
-        author=config["author"],
+        title=doc_title,
+        author=strings["author"],
     )
     doc.build(story, onFirstPage=page_callback, onLaterPages=page_callback)
+    tmp_path.unlink(missing_ok=True)
 
-    print(f"Built {output_path} ({doc.page} pages, lang={args.lang})")
+    from pypdf import PdfReader
+    pages = len(PdfReader(str(output_path)).pages)
+    print(f"Built {output_path} ({pages} pages, lang={args.lang})")
 
 
 if __name__ == "__main__":

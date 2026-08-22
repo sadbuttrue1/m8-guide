@@ -22,6 +22,9 @@ Mirror of the [Notion source](https://www.notion.so/Learning-M8-3656d3b8eb1381d6
 │   ├── week-08.md                     # Week 8 — Build Project 2
 │   ├── week-09.md                     # Week 9 — Finalize and ship Project 2
 │   └── week-10.md                     # Week 10 — Scope B mix + master (optional)
+├── front-matter.md                    # PDF cover page (per language)
+├── about.md                           # PDF closing page (per language)
+├── strings.json                       # PDF UI strings (per language)
 ├── reference/
 │   ├── mixing.md                      # Mixing Reference
 │   ├── finalization.md                # Finalization Reference
@@ -91,6 +94,10 @@ python3 build_pdf.py
 ```
 
 Outputs `M8_Learning_Plan.pdf` in the same directory.
+
+Every language keeps its own `front-matter.md`, `about.md` and `strings.json`
+next to its markdown, so `build_pdf.py` contains no prose and no table of
+contents — TOC entries are read from each file's own `#` heading.
 
 The complete [Russian edition](translations/ru/README.md) mirrors all 17 source
 Markdown files. Build it with:

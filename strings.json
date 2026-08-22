@@ -1,0 +1,15 @@
+{
+  "author": "Danielyan (t.me/sadbuttrue1)",
+  "output": "M8_Learning_Plan.pdf",
+  "footer": "M8 Learning Plan · Built collaboratively with Claude (Anthropic) · Free to share",
+  "contents": "Contents",
+  "overview_title": "Overview & operating principles",
+  "resources_title": "Resources",
+  "groups": {
+    "phase1": "Phase 1 — Learn (Weeks 1–4)",
+    "phase2": "Phase 2 — Apply (Weeks 5–7)",
+    "phase3": "Phase 3 — Polish (Weeks 8–9)",
+    "optional": "Optional",
+    "references": "References"
+  }
+}

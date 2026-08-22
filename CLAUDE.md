@@ -138,6 +138,7 @@ If, while translating, you find something to add or correct — a missing manual
 - **The builder holds no content.** No prose, no titles, no table of contents. A language supplies `front-matter.md` (cover), `about.md` (closing page) and `strings.json` (footer, "Contents", TOC group labels, output filename) beside its markdown. Section titles in the TOC are read from each file's own `#` heading, so they can't drift from the pages they index. Adding a language means adding a directory, not editing Python.
 - If a language needs a markdown construct the builder doesn't support, **fix the builder** — don't rewrite the translated markdown to dodge the gap. Tables, `---` rules, code fences and keycap spans must survive in every language.
 - **The renderer must never rewrite the author's text.** If a glyph doesn't render, that's a font problem: embed a font with the coverage, or borrow the glyph from a base-14 font via `GLYPH_FALLBACK`. Never silently swap an em dash for a hyphen or an arrow for `->` — that damages every language including English.
+- **Prose fonts are embedded, in every language.** The base-14 fonts aren't stored in the PDF, so a viewer without real Helvetica substitutes one with different metrics and shifts line breaks through whole paragraphs. This plan is read as a PDF on phones, so it can't rely on that. Code spans and two fallback glyphs stay on Courier/Symbol/ZapfDingbats, where substitution costs nothing.
 - Declare any new font or package dependency in `requirements.txt`.
 
 ### What must survive translation

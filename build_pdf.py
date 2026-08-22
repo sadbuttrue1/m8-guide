@@ -171,26 +171,21 @@ def _renderable_in_base14(text):
     return True
 
 
-def rendered_sources(source_dir):
-    """The files that actually end up in the PDF."""
-    paths = [source_dir / "front-matter.md", source_dir / "about.md"]
-    paths += [source_dir / rel for _, rel in SECTIONS if rel]
-    return paths
+def configure_fonts():
+    """Embed Roboto for prose, in every language.
 
+    The base-14 fonts are not embedded in the PDF -- the viewer supplies them.
+    Viewers that lack real Helvetica substitute one with different metrics,
+    which shifts line breaks through whole paragraphs; this plan is shared as a
+    PDF read on phones, so prose is embedded rather than left to chance.
 
-def configure_fonts(source_dir):
-    """Embed a Unicode prose font only if the source actually needs one.
-
-    English stays on the base-14 fonts, so its PDF is unchanged by the
-    multi-language support. A source written in Cyrillic (or any other script
-    Helvetica lacks) gets Roboto for prose instead. Code spans keep the
-    monospace font either way -- see code_font().
+    Code spans stay on Courier and two glyphs come from Symbol/ZapfDingbats.
+    Those are base-14 too, but they carry short ASCII tokens and single
+    characters, where a substituted face costs nothing: no Cyrillic-capable
+    monospace font is distributed on PyPI, and vendoring one is not worth a
+    few hundred KB of binary in a Markdown repo.
     """
     global FONT_REGULAR, FONT_BOLD, FONT_ITALIC, FONT_BOLD_ITALIC
-
-    sources = rendered_sources(source_dir)
-    if all(_renderable_in_base14(f.read_text(encoding="utf-8")) for f in sources):
-        return
 
     distribution = metadata.distribution("font-roboto")
     font_dir = Path(distribution.locate_file("font_roboto/files"))
@@ -800,7 +795,7 @@ def main():
 
     here = Path(__file__).resolve().parent
     source_dir, strings = load_language(args.lang)
-    configure_fonts(source_dir)
+    configure_fonts()
 
     output_path = Path(args.output) if args.output else source_dir / strings["output"]
     if not output_path.is_absolute():

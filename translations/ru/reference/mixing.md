@@ -66,7 +66,7 @@
 
 M8 имеет трёхполосный параметрический EQ на каждом инструменте и 128 общих банков EQ. См. M8 Operation Manual v6.5.2, стр. 32. Это главный инструмент сведения.
 
-Доступ: Instrument View > слот `EQ` > `[SHIFT]+[RIGHT]` либо `[EDIT]`, чтобы открыть EQ Editor.
+Доступ: Instrument View → слот `EQ` → `[SHIFT]+[RIGHT]` либо `[EDIT]`, чтобы открыть EQ Editor.
 
 У каждой полосы есть `GAIN`, `FREQ`, `Q`, то есть ширина, `TYPE` (`LOWCUT`, `LOWSHELF`, `BELL`, `BANDPASS`, `HI.SHELF`, `HI.CUT`, `ALLPASS`) и `MODE` (`STEREO`, `MID`, `SIDE`, `LEFT`, `RIGHT`).
 

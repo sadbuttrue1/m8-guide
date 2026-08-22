@@ -20,7 +20,7 @@
 
 **Ссылки:** M8 Operation Manual v6.5.2 - Mixer View (стр. 30), EQ Editor View (стр. 32), Limiter & Mix Scope View (стр. 34), Effect Settings View (стр. 36), Render View (стр. 47).
 
-В Mixer M8 встроена настоящая mastering chain: **track volumes > send effects (ModFX, Delay, Reverb) > OTT compressor > main EQ > Limiter > DJ filter > Main mix volume**. Используй её.
+В Mixer M8 встроена настоящая mastering chain: **track volumes → send effects (ModFX, Delay, Reverb) → OTT compressor → main EQ → Limiter → DJ filter → Main mix volume**. Используй её.
 
 ### Шаг 1: проверка premaster-микса - 15 минут
 
@@ -84,7 +84,7 @@ Limiter предотвращает clipping и повышает восприни
 
 ### Шаг 6: render - 5 минут
 
-- [ ] Project View > Render. См. M8 Operation Manual v6.5.2, стр. 47.
+- [ ] Project View → Render. См. M8 Operation Manual v6.5.2, стр. 47.
 
 - [ ] Настройки: WAV 44,1 кГц, `MODE` 16- либо 32-bit. Это единственные две разрядности рендера M8; 24-bit нет. **По умолчанию используй 32-bit** — это наиболее точный экспорт, который стоит хранить независимо от того, последует ли Scope B. См. [Какую разрядность выбрать и почему это почти не важно](#какую-разрядность-выбрать-и-почему-это-почти-не-важно).
 

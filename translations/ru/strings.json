@@ -1,0 +1,15 @@
+{
+  "author": "Danielyan; Russian edition by the M8 community",
+  "output": "M8_Learning_Plan_RU.pdf",
+  "footer": "Учебный план M8 · Создан совместно с Claude (Anthropic) · Можно свободно делиться",
+  "contents": "Содержание",
+  "overview_title": "Обзор и принципы работы",
+  "resources_title": "Ресурсы",
+  "groups": {
+    "phase1": "Этап 1 — обучение (недели 1–4)",
+    "phase2": "Этап 2 — применение (недели 5–7)",
+    "phase3": "Этап 3 — полировка (недели 8–9)",
+    "optional": "Необязательно",
+    "references": "Справочники"
+  }
+}
